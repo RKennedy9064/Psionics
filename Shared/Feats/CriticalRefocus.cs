@@ -9,9 +9,9 @@ using BlueprintCore.Conditions.Builder.ContextEx;
 using BlueprintCore.Utils;
 using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
-using PsychicWarrior.Utils;
+using Psionics.Utils;
 
-namespace PsychicWarrior.Shared.Feats;
+namespace Psionics.Shared.Feats;
 
 public static class CriticalRefocus
 {

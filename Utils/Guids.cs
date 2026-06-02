@@ -1,4 +1,4 @@
-namespace PsychicWarrior.Utils;
+namespace Psionics.Utils;
 
 public static class Guids
 {

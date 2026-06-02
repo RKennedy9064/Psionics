@@ -1,9 +1,9 @@
 using BlueprintCore.Blueprints.CustomConfigurators.Classes;
 using BlueprintCore.Blueprints.References;
-using PsychicWarrior.Shared.Mechanics;
-using PsychicWarrior.Utils;
+using Psionics.Shared.Mechanics;
+using Psionics.Utils;
 
-namespace PsychicWarrior.SoulKnife.Features.MindBlade;
+namespace Psionics.SoulKnife.Features.MindBlade;
 
 public static class WeaponFocusMindBlade
 {

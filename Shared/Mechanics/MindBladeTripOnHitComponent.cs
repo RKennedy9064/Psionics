@@ -6,7 +6,7 @@ using Kingmaker.RuleSystem;
 using Kingmaker.RuleSystem.Rules;
 using Kingmaker.UnitLogic;
 
-namespace PsychicWarrior.Shared.Mechanics;
+namespace Psionics.Shared.Mechanics;
 
 /// <summary>
 /// Blade skill: Weapon Special (trip). On a successful hit with the mind blade, makes a free trip

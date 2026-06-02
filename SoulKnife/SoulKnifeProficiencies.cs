@@ -1,8 +1,8 @@
 using BlueprintCore.Blueprints.CustomConfigurators.Classes;
 using BlueprintCore.Blueprints.References;
-using PsychicWarrior.Utils;
+using Psionics.Utils;
 
-namespace PsychicWarrior.SoulKnife;
+namespace Psionics.SoulKnife;
 
 public static class SoulKnifeProficiencies
 {

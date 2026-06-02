@@ -13,9 +13,9 @@ using Kingmaker.Items;
 using Kingmaker.PubSubSystem;
 using Kingmaker.UnitLogic;
 using Kingmaker.UnitLogic.Class.LevelUp;
-using PsychicWarrior.Utils;
+using Psionics.Utils;
 
-namespace PsychicWarrior.Shared.Mechanics;
+namespace Psionics.Shared.Mechanics;
 
 [Serializable]
 public class MindBladeComponent : UnitFactComponentDelegate, IUnitLevelUpHandler
@@ -24,7 +24,7 @@ public class MindBladeComponent : UnitFactComponentDelegate, IUnitLevelUpHandler
     public BlueprintItemWeaponReference WeaponRef;
 
     private static readonly Dictionary<WeaponCategory, BlueprintItemWeapon> s_Cache = [];
-    private static readonly LogWrapper Log = LogWrapper.Get("PsychicWarrior");
+    private static readonly LogWrapper Log = LogWrapper.Get("Psionics");
 
     private BlueprintItemWeapon FindWeapon()
     {

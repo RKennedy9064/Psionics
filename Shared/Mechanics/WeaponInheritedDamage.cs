@@ -4,7 +4,7 @@ using Kingmaker.Items;
 using Kingmaker.RuleSystem;
 using Kingmaker.RuleSystem.Rules.Damage;
 
-namespace PsychicWarrior.Shared.Mechanics;
+namespace Psionics.Shared.Mechanics;
 
 /// <summary>
 /// Shared helper for building a PhysicalDamage roll that inherits the triggering weapon's

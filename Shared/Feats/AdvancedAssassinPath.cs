@@ -8,10 +8,10 @@ using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
 using Kingmaker.EntitySystem.Stats;
 using Kingmaker.UnitLogic;
-using PsychicWarrior.Shared.Mechanics;
-using PsychicWarrior.Utils;
+using Psionics.Shared.Mechanics;
+using Psionics.Utils;
 
-namespace PsychicWarrior.Shared.Feats;
+namespace Psionics.Shared.Feats;
 
 public static class AdvancedAssassinPath
 {

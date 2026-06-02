@@ -15,10 +15,10 @@ using Kingmaker.Enums;
 using Kingmaker.RuleSystem;
 using Kingmaker.RuleSystem.Rules.Damage;
 using Kingmaker.UnitLogic.Mechanics;
-using PsychicWarrior.HarmonyPatches;
-using PsychicWarrior.Utils;
+using Psionics.HarmonyPatches;
+using Psionics.Utils;
 
-namespace PsychicWarrior.Shared.Feats;
+namespace Psionics.Shared.Feats;
 
 public static class GreaterPsionicShot
 {

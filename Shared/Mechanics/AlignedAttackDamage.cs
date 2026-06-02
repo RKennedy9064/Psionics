@@ -7,9 +7,9 @@ using Kingmaker.RuleSystem.Rules;
 using Kingmaker.RuleSystem.Rules.Damage;
 using Kingmaker.UnitLogic;
 using Kingmaker.UnitLogic.Buffs.Blueprints;
-using PsychicWarrior.Utils;
+using Psionics.Utils;
 
-namespace PsychicWarrior.Shared.Mechanics;
+namespace Psionics.Shared.Mechanics;
 
 /// <summary>
 /// On every melee hit while psionically focused, deals 2d6 extra physical damage with all four

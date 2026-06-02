@@ -4,9 +4,9 @@ using BlueprintCore.Blueprints.CustomConfigurators.Classes.Selection;
 using BlueprintCore.Blueprints.References;
 using Kingmaker.EntitySystem.Stats;
 using Kingmaker.RuleSystem;
-using PsychicWarrior.Utils;
+using Psionics.Utils;
 
-namespace PsychicWarrior.SoulKnife;
+namespace Psionics.SoulKnife;
 
 public static class SoulKnifeClass
 {

@@ -6,9 +6,9 @@ using Kingmaker.Enums;
 using Kingmaker.PubSubSystem;
 using Kingmaker.RuleSystem.Rules;
 using Kingmaker.UnitLogic;
-using PsychicWarrior.Utils;
+using Psionics.Utils;
 
-namespace PsychicWarrior.Shared.Mechanics;
+namespace Psionics.Shared.Mechanics;
 
 /// <summary>
 /// Competence bonus to attack rolls while in Mind Knight Trance, but only when attacking with

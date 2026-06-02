@@ -17,16 +17,16 @@ using Kingmaker.UnitLogic.Abilities.Components;
 using Kingmaker.UnitLogic.Mechanics;
 using Kingmaker.UnitLogic.Mechanics.Components;
 using Kingmaker.Utility;
-using PsychicWarrior.Shared.Mechanics;
+using Psionics.Shared.Mechanics;
 using Kingmaker.UnitLogic.Abilities.Blueprints;
 using Kingmaker.UnitLogic.Buffs.Blueprints;
 using Kingmaker.UnitLogic.Commands.Base;
 using Kingmaker.UnitLogic.FactLogic;
 using Kingmaker.UnitLogic.Mechanics.Actions;
 using Kingmaker.Visual.Animation.Kingmaker.Actions;
-using PsychicWarrior.Utils;
+using Psionics.Utils;
 
-namespace PsychicWarrior.SoulKnife.Features.BladeSkills;
+namespace Psionics.SoulKnife.Features.BladeSkills;
 
 /// <summary>
 /// Status-effect blade skills (Stunning Blade, Dazzling Blade, Wing Clip). Each is a standard-action

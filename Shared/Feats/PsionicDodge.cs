@@ -12,9 +12,9 @@ using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
 using Kingmaker.EntitySystem.Stats;
 using Kingmaker.Enums;
-using PsychicWarrior.Utils;
+using Psionics.Utils;
 
-namespace PsychicWarrior.Shared.Feats;
+namespace Psionics.Shared.Feats;
 
 public static class PsionicDodge
 {

@@ -6,9 +6,9 @@ using Kingmaker.Items;
 using Kingmaker.PubSubSystem;
 using Kingmaker.RuleSystem.Rules;
 using Kingmaker.UnitLogic;
-using PsychicWarrior.Utils;
+using Psionics.Utils;
 
-namespace PsychicWarrior.Shared.Mechanics;
+namespace Psionics.Shared.Mechanics;
 
 /// <summary>
 /// Applies a competence bonus to attack rolls while in Dervish Trance, but only when wielding two weapons.

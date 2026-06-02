@@ -4,8 +4,9 @@ using HarmonyLib;
 using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.JsonSystem;
 using Kingmaker.Blueprints.Root;
+using Psionics.PsychicWarrior;
 
-namespace PsychicWarrior;
+namespace Psionics;
 
 [HarmonyPatch(typeof(BlueprintsCache), "Init")]
 public static class BlueprintInit
@@ -18,7 +19,7 @@ public static class BlueprintInit
         if (Initialized) return;
         Initialized = true;
 
-        var logger = LogWrapper.Get("PsychicWarrior");
+        var logger = LogWrapper.Get("Psionics");
 
         // Each Configure() call is wrapped so a single failure is logged without
         // aborting the rest of initialization or the class registration.
@@ -27,8 +28,8 @@ public static class BlueprintInit
             try { action(); }
             catch (System.Exception e)
             {
-                log.Error($"[PsychicWarrior] {name} failed: {e}");
-                UnityEngine.Debug.LogError($"[PsychicWarrior] {name} failed: {e}");
+                log.Error($"[Psionics] {name} failed: {e}");
+                UnityEngine.Debug.LogError($"[Psionics] {name} failed: {e}");
             }
         }
 
@@ -38,102 +39,102 @@ public static class BlueprintInit
 
         // ── Phase 1: Foundation ────────────────────────────────────────────────
         Run(nameof(Shared.Mechanics.Focus), Shared.Mechanics.Focus.Configure, logger);
-        Run(nameof(Features.PsionicProficiency), Features.PsionicProficiency.Configure, logger);
-        Run(nameof(Features.MartialPower), Features.MartialPower.Configure, logger);
+        Run(nameof(PsychicWarrior.Features.PsionicProficiency), PsychicWarrior.Features.PsionicProficiency.Configure, logger);
+        Run(nameof(PsychicWarrior.Features.MartialPower), PsychicWarrior.Features.MartialPower.Configure, logger);
 
         // ── Phase 2: 0-level talent abilities (must exist before TalentsSelection) ──
-        Run(nameof(Powers.MinorPrecognition), Powers.MinorPrecognition.Configure, logger);
-        Run(nameof(Powers.Burst), Powers.Burst.Configure, logger);
-        Run(nameof(Powers.EmptyMind), Powers.EmptyMind.Configure, logger);
-        Run(nameof(Powers.Valor), Powers.Valor.Configure, logger);
-        Run(nameof(Powers.TelekineticPunch), Powers.TelekineticPunch.Configure, logger);
-        Run(nameof(Powers.PrecognitionDefensive), Powers.PrecognitionDefensive.Configure, logger);
-        Run(nameof(Powers.Deceleration), Powers.Deceleration.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.MinorPrecognition), PsychicWarrior.Powers.MinorPrecognition.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.Burst), PsychicWarrior.Powers.Burst.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.EmptyMind), PsychicWarrior.Powers.EmptyMind.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.Valor), PsychicWarrior.Powers.Valor.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.TelekineticPunch), PsychicWarrior.Powers.TelekineticPunch.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.PrecognitionDefensive), PsychicWarrior.Powers.PrecognitionDefensive.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.Deceleration), PsychicWarrior.Powers.Deceleration.Configure, logger);
 
         // Talent selection references the 0-level power GUIDs above
-        Run(nameof(Features.TalentsSelection), Features.TalentsSelection.Configure, logger);
+        Run(nameof(PsychicWarrior.Features.TalentsSelection), PsychicWarrior.Features.TalentsSelection.Configure, logger);
 
         // ── Phase 3: 1st-level powers ──────────────────────────────────────────
-        Run(nameof(Powers.Expansion), Powers.Expansion.Configure, logger);
-        Run(nameof(Powers.Compression), Powers.Compression.Configure, logger);
-        Run(nameof(Powers.MetaphysicalClaw), Powers.MetaphysicalClaw.Configure, logger);
-        Run(nameof(Powers.Vigor), Powers.Vigor.Configure, logger);
-        Run(nameof(Powers.ForceScreen), Powers.ForceScreen.Configure, logger);
-        Run(nameof(Powers.InertialArmor), Powers.InertialArmor.Configure, logger);
-        Run(nameof(Powers.ThickenSkin), Powers.ThickenSkin.Configure, logger);
-        Run(nameof(Powers.Biofeedback), Powers.Biofeedback.Configure, logger);
-        Run(nameof(Powers.MetaphysicalWeapon), Powers.MetaphysicalWeapon.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.Expansion), PsychicWarrior.Powers.Expansion.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.Compression), PsychicWarrior.Powers.Compression.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.MetaphysicalClaw), PsychicWarrior.Powers.MetaphysicalClaw.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.Vigor), PsychicWarrior.Powers.Vigor.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.ForceScreen), PsychicWarrior.Powers.ForceScreen.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.InertialArmor), PsychicWarrior.Powers.InertialArmor.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.ThickenSkin), PsychicWarrior.Powers.ThickenSkin.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.Biofeedback), PsychicWarrior.Powers.Biofeedback.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.MetaphysicalWeapon), PsychicWarrior.Powers.MetaphysicalWeapon.Configure, logger);
 
         // ── Phase 3b: 2nd-level powers ─────────────────────────────────────────
-        Run(nameof(Powers.PsionicLionsCharge), Powers.PsionicLionsCharge.Configure, logger);
-        Run(nameof(Powers.ConcealingAmorpha), Powers.ConcealingAmorpha.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.PsionicLionsCharge), PsychicWarrior.Powers.PsionicLionsCharge.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.ConcealingAmorpha), PsychicWarrior.Powers.ConcealingAmorpha.Configure, logger);
 
         // ── Phase 8: 2nd-level powers ──────────────────────────────────────────
-        Run(nameof(Powers.BodyAdjustment), Powers.BodyAdjustment.Configure, logger);
-        Run(nameof(Powers.BodyPurification), Powers.BodyPurification.Configure, logger);
-        Run(nameof(Powers.StrengthOfMyEnemy), Powers.StrengthOfMyEnemy.Configure, logger);
-        Run(nameof(Powers.AnimalAffinity), Powers.AnimalAffinity.Configure, logger);
-        Run(nameof(Powers.DetectHostileIntent), Powers.DetectHostileIntent.Configure, logger);
-        Run(nameof(Powers.Hustle), Powers.Hustle.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.BodyAdjustment), PsychicWarrior.Powers.BodyAdjustment.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.BodyPurification), PsychicWarrior.Powers.BodyPurification.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.StrengthOfMyEnemy), PsychicWarrior.Powers.StrengthOfMyEnemy.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.AnimalAffinity), PsychicWarrior.Powers.AnimalAffinity.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.DetectHostileIntent), PsychicWarrior.Powers.DetectHostileIntent.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.Hustle), PsychicWarrior.Powers.Hustle.Configure, logger);
 
         // ── Phase 14: 5th-level powers ─────────────────────────────────────────
-        Run(nameof(Powers.TrueMetabolism), Powers.TrueMetabolism.Configure, logger);
-        Run(nameof(Powers.AdaptBody), Powers.AdaptBody.Configure, logger);
-        Run(nameof(Powers.TrueSeeing), Powers.TrueSeeing.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.TrueMetabolism), PsychicWarrior.Powers.TrueMetabolism.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.AdaptBody), PsychicWarrior.Powers.AdaptBody.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.TrueSeeing), PsychicWarrior.Powers.TrueSeeing.Configure, logger);
 
         // ── Phase 14: 6th-level powers ─────────────────────────────────────────
-        Run(nameof(Powers.BodyOfIron), Powers.BodyOfIron.Configure, logger);
-        Run(nameof(Powers.DisintegratePsionic), Powers.DisintegratePsionic.Configure, logger);
-        Run(nameof(Powers.MindBlankPersonalPsionic), Powers.MindBlankPersonalPsionic.Configure, logger);
-        Run(nameof(Powers.OakBody), Powers.OakBody.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.BodyOfIron), PsychicWarrior.Powers.BodyOfIron.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.DisintegratePsionic), PsychicWarrior.Powers.DisintegratePsionic.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.MindBlankPersonalPsionic), PsychicWarrior.Powers.MindBlankPersonalPsionic.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.OakBody), PsychicWarrior.Powers.OakBody.Configure, logger);
 
         // ── Phase 14: 4th-level powers ─────────────────────────────────────────
-        Run(nameof(Powers.DimensionDoor), Powers.DimensionDoor.Configure, logger);
-        Run(nameof(Powers.FreedomOfMovement), Powers.FreedomOfMovement.Configure, logger);
-        Run(nameof(Powers.WeaponOfEnergy), Powers.WeaponOfEnergy.Configure, logger);
-        Run(nameof(Powers.SteadfastPerception), Powers.SteadfastPerception.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.DimensionDoor), PsychicWarrior.Powers.DimensionDoor.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.FreedomOfMovement), PsychicWarrior.Powers.FreedomOfMovement.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.WeaponOfEnergy), PsychicWarrior.Powers.WeaponOfEnergy.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.SteadfastPerception), PsychicWarrior.Powers.SteadfastPerception.Configure, logger);
 
         // ── Phase 3c: 3rd-level powers ─────────────────────────────────────────
-        Run(nameof(Powers.PhysicalAcceleration), Powers.PhysicalAcceleration.Configure, logger);
-        Run(nameof(Powers.DimensionSlide), Powers.DimensionSlide.Configure, logger);
-        Run(nameof(Powers.EvadeBurst), Powers.EvadeBurst.Configure, logger);
-        Run(nameof(Powers.UbiquitousVision), Powers.UbiquitousVision.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.PhysicalAcceleration), PsychicWarrior.Powers.PhysicalAcceleration.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.DimensionSlide), PsychicWarrior.Powers.DimensionSlide.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.EvadeBurst), PsychicWarrior.Powers.EvadeBurst.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.UbiquitousVision), PsychicWarrior.Powers.UbiquitousVision.Configure, logger);
 
         // ── Phase 3d: 4th-level powers ─────────────────────────────────────────
-        Run(nameof(Powers.InertialBarrier), Powers.InertialBarrier.Configure, logger);
-        Run(nameof(Powers.ZealousFury), Powers.ZealousFury.Configure, logger);
-        Run(nameof(Powers.EnergyAdaptation), Powers.EnergyAdaptation.Configure, logger);
-        Run(nameof(Powers.BattleTransformation), Powers.BattleTransformation.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.InertialBarrier), PsychicWarrior.Powers.InertialBarrier.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.ZealousFury), PsychicWarrior.Powers.ZealousFury.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.EnergyAdaptation), PsychicWarrior.Powers.EnergyAdaptation.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.BattleTransformation), PsychicWarrior.Powers.BattleTransformation.Configure, logger);
 
         // ── Phase 9: 3rd-level powers ──────────────────────────────────────────
-        Run(nameof(Powers.VampiricBlade), Powers.VampiricBlade.Configure, logger);
-        Run(nameof(Powers.MentalBarrier), Powers.MentalBarrier.Configure, logger);
-        Run(nameof(Powers.ConcealingAmorphaGreater), Powers.ConcealingAmorphaGreater.Configure, logger);
-        Run(nameof(Powers.GraftWeapon), Powers.GraftWeapon.Configure, logger);
-        Run(nameof(Powers.KeenEdgePsionic), Powers.KeenEdgePsionic.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.VampiricBlade), PsychicWarrior.Powers.VampiricBlade.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.MentalBarrier), PsychicWarrior.Powers.MentalBarrier.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.ConcealingAmorphaGreater), PsychicWarrior.Powers.ConcealingAmorphaGreater.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.GraftWeapon), PsychicWarrior.Powers.GraftWeapon.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.KeenEdgePsionic), PsychicWarrior.Powers.KeenEdgePsionic.Configure, logger);
 
         // ── Phase 4: Class features (paths first, skill bonuses reference path GUIDs) ──
-        Run(nameof(Features.PsychicWarriorProficiencies), Features.PsychicWarriorProficiencies.Configure, logger);
-        Run(nameof(Features.PsychicWarriorBonusFeat), Features.PsychicWarriorBonusFeat.Configure, logger);
+        Run(nameof(PsychicWarrior.Features.PsychicWarriorProficiencies), PsychicWarrior.Features.PsychicWarriorProficiencies.Configure, logger);
+        Run(nameof(PsychicWarrior.Features.PsychicWarriorBonusFeat), PsychicWarrior.Features.PsychicWarriorBonusFeat.Configure, logger);
 
         // Individual paths must be configured before PathSelection (which references their GUIDs)
         // and before PathSkillBonus (which references WeaponmasterPath/BrawlerPath GUIDs).
-        Run(nameof(Features.Paths.WeaponmasterPath), Features.Paths.WeaponmasterPath.Configure, logger);
-        Run(nameof(Features.Paths.BrawlerPath), Features.Paths.BrawlerPath.Configure, logger);
-        Run(nameof(Features.Paths.ArcherPath), Features.Paths.ArcherPath.Configure, logger);
-        Run(nameof(Features.Paths.AsceticPath), Features.Paths.AsceticPath.Configure, logger);
-        Run(nameof(Features.Paths.AssassinsPath), Features.Paths.AssassinsPath.Configure, logger);
-        Run(nameof(Features.Paths.DervishPath), Features.Paths.DervishPath.Configure, logger);
-        Run(nameof(Features.Paths.FeralWarriorPath), Features.Paths.FeralWarriorPath.Configure, logger);
-        Run(nameof(Features.Paths.GladiatorPath), Features.Paths.GladiatorPath.Configure, logger);
-        Run(nameof(Features.Paths.InfiltratorPath), Features.Paths.InfiltratorPath.Configure, logger);
-        Run(nameof(Features.Paths.InterceptorPath), Features.Paths.InterceptorPath.Configure, logger);
-        Run(nameof(Powers.CallWeaponry), Powers.CallWeaponry.Configure, logger);
-        Run(nameof(Features.Paths.MindKnightPath), Features.Paths.MindKnightPath.Configure, logger);
-        Run(nameof(Features.Paths.SurvivorPath), Features.Paths.SurvivorPath.Configure, logger);
-        Run(nameof(Features.Paths.PsychicWarriorPathSelection), Features.Paths.PsychicWarriorPathSelection.Configure, logger);
-        Run(nameof(Features.PathSkillBonus), Features.PathSkillBonus.Configure, logger);
-        Run(nameof(Features.Paths.TwistingPathsPathweaving), Features.Paths.TwistingPathsPathweaving.Configure, logger);
+        Run(nameof(PsychicWarrior.Features.Paths.WeaponmasterPath), PsychicWarrior.Features.Paths.WeaponmasterPath.Configure, logger);
+        Run(nameof(PsychicWarrior.Features.Paths.BrawlerPath), PsychicWarrior.Features.Paths.BrawlerPath.Configure, logger);
+        Run(nameof(PsychicWarrior.Features.Paths.ArcherPath), PsychicWarrior.Features.Paths.ArcherPath.Configure, logger);
+        Run(nameof(PsychicWarrior.Features.Paths.AsceticPath), PsychicWarrior.Features.Paths.AsceticPath.Configure, logger);
+        Run(nameof(PsychicWarrior.Features.Paths.AssassinsPath), PsychicWarrior.Features.Paths.AssassinsPath.Configure, logger);
+        Run(nameof(PsychicWarrior.Features.Paths.DervishPath), PsychicWarrior.Features.Paths.DervishPath.Configure, logger);
+        Run(nameof(PsychicWarrior.Features.Paths.FeralWarriorPath), PsychicWarrior.Features.Paths.FeralWarriorPath.Configure, logger);
+        Run(nameof(PsychicWarrior.Features.Paths.GladiatorPath), PsychicWarrior.Features.Paths.GladiatorPath.Configure, logger);
+        Run(nameof(PsychicWarrior.Features.Paths.InfiltratorPath), PsychicWarrior.Features.Paths.InfiltratorPath.Configure, logger);
+        Run(nameof(PsychicWarrior.Features.Paths.InterceptorPath), PsychicWarrior.Features.Paths.InterceptorPath.Configure, logger);
+        Run(nameof(PsychicWarrior.Powers.CallWeaponry), PsychicWarrior.Powers.CallWeaponry.Configure, logger);
+        Run(nameof(PsychicWarrior.Features.Paths.MindKnightPath), PsychicWarrior.Features.Paths.MindKnightPath.Configure, logger);
+        Run(nameof(PsychicWarrior.Features.Paths.SurvivorPath), PsychicWarrior.Features.Paths.SurvivorPath.Configure, logger);
+        Run(nameof(PsychicWarrior.Features.Paths.PsychicWarriorPathSelection), PsychicWarrior.Features.Paths.PsychicWarriorPathSelection.Configure, logger);
+        Run(nameof(PsychicWarrior.Features.PathSkillBonus), PsychicWarrior.Features.PathSkillBonus.Configure, logger);
+        Run(nameof(PsychicWarrior.Features.Paths.TwistingPathsPathweaving), PsychicWarrior.Features.Paths.TwistingPathsPathweaving.Configure, logger);
 
         // ── Phase 5: Feats ─────────────────────────────────────────────────────
         Run(nameof(Shared.Feats.PsionicMeditation), Shared.Feats.PsionicMeditation.Configure, logger);
@@ -177,15 +178,15 @@ public static class BlueprintInit
 
         // Populate class-specific feat list now that all psionic feats are registered
         Run("BonusFeatSelection.PopulateClassSpecificFeats",
-            Features.PsychicWarriorBonusFeat.PopulateClassSpecificFeats, logger);
+            PsychicWarrior.Features.PsychicWarriorBonusFeat.PopulateClassSpecificFeats, logger);
 
         // ── Phase 15: Level 20 Capstone ───────────────────────────────────────
-        Run(nameof(Features.EternalWarrior), Features.EternalWarrior.Configure, logger);
+        Run(nameof(PsychicWarrior.Features.EternalWarrior), PsychicWarrior.Features.EternalWarrior.Configure, logger);
 
         // ── Phase 6: Class definition (must come last) ─────────────────────────
-        Run(nameof(Classes.PsychicWarriorSpellbook), Classes.PsychicWarriorSpellbook.Configure, logger);
-        Run(nameof(Features.PrebuildPsychicWarriorFeatureList), Features.PrebuildPsychicWarriorFeatureList.Configure, logger);
-        Run(nameof(Classes.PsychicWarriorClass), Classes.PsychicWarriorClass.Configure, logger);
+        Run(nameof(PsychicWarriorSpellbook), PsychicWarriorSpellbook.Configure, logger);
+        Run(nameof(PsychicWarrior.Features.PrebuildPsychicWarriorFeatureList), PsychicWarrior.Features.PrebuildPsychicWarriorFeatureList.Configure, logger);
+        Run(nameof(PsychicWarriorClass), PsychicWarriorClass.Configure, logger);
 
         // ── SoulKnife ─────────────────────────────────────────────────────────
         Run(nameof(SoulKnife.SoulKnifeProficiencies),                       SoulKnife.SoulKnifeProficiencies.Configure,                       logger);
@@ -218,7 +219,7 @@ public static class BlueprintInit
         }
         catch (System.Exception e)
         {
-            logger.Error($"[PsychicWarrior] Class registration failed: {e}");
+            logger.Error($"[Psionics] Class registration failed: {e}");
         }
 
     }

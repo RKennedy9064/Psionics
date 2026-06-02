@@ -5,10 +5,10 @@ using Kingmaker.Blueprints;
 using Kingmaker.EntitySystem;
 using Kingmaker.EntitySystem.Entities;
 using Kingmaker.UnitLogic.ActivatableAbilities;
-using PsychicWarrior.Shared.Mechanics;
-using PsychicWarrior.Utils;
+using Psionics.Shared.Mechanics;
+using Psionics.Utils;
 
-namespace PsychicWarrior.HarmonyPatches;
+namespace Psionics.HarmonyPatches;
 
 /// <summary>
 /// Enhanced Mind Blade pool: the ability toggles use the game's <see cref="ActivatableAbilityResourceLogic"/>

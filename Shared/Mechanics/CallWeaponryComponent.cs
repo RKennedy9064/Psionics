@@ -14,7 +14,7 @@ using Kingmaker.PubSubSystem;
 using Kingmaker.UnitLogic;
 using Kingmaker.UnitLogic.Class.LevelUp;
 
-namespace PsychicWarrior.Shared.Mechanics;
+namespace Psionics.Shared.Mechanics;
 
 [Serializable]
 public class CallWeaponryComponent : UnitFactComponentDelegate, IUnitLevelUpHandler
@@ -26,7 +26,7 @@ public class CallWeaponryComponent : UnitFactComponentDelegate, IUnitLevelUpHand
     private int _appliedEnhancementLevel;
 
     private static readonly Dictionary<WeaponCategory, BlueprintItemWeapon> s_Cache = [];
-    private static readonly LogWrapper Log = LogWrapper.Get("PsychicWarrior");
+    private static readonly LogWrapper Log = LogWrapper.Get("Psionics");
 
     private BlueprintItemWeapon FindWeapon()
     {
@@ -82,11 +82,11 @@ public class CallWeaponryComponent : UnitFactComponentDelegate, IUnitLevelUpHand
         Log.Info($"[CW] After InsertItem: slot.HasItem={slot.HasItem} slot.Item={(slot.HasItem ? slot.Item?.Blueprint?.name : "empty")}");
         slot.Lock.Retain();
 
-        var visualEnch = BlueprintTool.Get<BlueprintWeaponEnchantment>(PsychicWarrior.Utils.Guids.CallWeaponryVisualEnchantment);
+        var visualEnch = BlueprintTool.Get<BlueprintWeaponEnchantment>(Psionics.Utils.Guids.CallWeaponryVisualEnchantment);
         if (visualEnch != null)
             item.AddEnchantment(visualEnch, null);
 
-        var pwClass = BlueprintTool.Get<BlueprintCharacterClass>(PsychicWarrior.Utils.Guids.PsychicWarriorClass);
+        var pwClass = BlueprintTool.Get<BlueprintCharacterClass>(Psionics.Utils.Guids.PsychicWarriorClass);
         var classLevel = Owner.Descriptor.Progression.GetClassLevel(pwClass);
         _appliedEnhancementLevel = ApplyEnchantment(item, 0, classLevel);
 
@@ -134,7 +134,7 @@ public class CallWeaponryComponent : UnitFactComponentDelegate, IUnitLevelUpHand
 
         if (slot.Item is not ItemEntityWeapon item) return;
 
-        var pwClass = BlueprintTool.Get<BlueprintCharacterClass>(PsychicWarrior.Utils.Guids.PsychicWarriorClass);
+        var pwClass = BlueprintTool.Get<BlueprintCharacterClass>(Psionics.Utils.Guids.PsychicWarriorClass);
         var classLevel = Owner.Descriptor.Progression.GetClassLevel(pwClass);
         _appliedEnhancementLevel = ApplyEnchantment(item, _appliedEnhancementLevel, classLevel);
     }

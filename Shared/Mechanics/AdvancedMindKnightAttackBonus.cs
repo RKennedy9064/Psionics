@@ -6,9 +6,9 @@ using Kingmaker.PubSubSystem;
 using Kingmaker.RuleSystem.Rules;
 using Kingmaker.UnitLogic;
 using Kingmaker.UnitLogic.Buffs.Blueprints;
-using PsychicWarrior.Utils;
+using Psionics.Utils;
 
-namespace PsychicWarrior.Shared.Mechanics;
+namespace Psionics.Shared.Mechanics;
 
 // While the Mind Knight Maneuver buff is active, adds a competence bonus to attack rolls
 // equal to +1 per 4 psychic warrior levels. Fires on RuleCalculateAttackBonusWithoutTarget

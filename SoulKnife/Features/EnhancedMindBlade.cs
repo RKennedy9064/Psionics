@@ -9,10 +9,10 @@ using BlueprintCore.Blueprints.References;
 using BlueprintCore.Utils;
 using Kingmaker.Blueprints;
 using Kingmaker.UnitLogic.ActivatableAbilities;
-using PsychicWarrior.Shared.Mechanics;
-using PsychicWarrior.Utils;
+using Psionics.Shared.Mechanics;
+using Psionics.Utils;
 
-namespace PsychicWarrior.SoulKnife.Features;
+namespace Psionics.SoulKnife.Features;
 
 /// <summary>
 /// Enhanced Mind Blade: a level-scaled enhancement pool the soulknife allocates between a direct

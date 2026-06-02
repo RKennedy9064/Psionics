@@ -6,9 +6,9 @@ using BlueprintCore.Utils.Types;
 using Kingmaker.Enums;
 using Kingmaker.Enums.Damage;
 using Kingmaker.RuleSystem;
-using PsychicWarrior.Utils;
+using Psionics.Utils;
 
-namespace PsychicWarrior.SoulKnife.Features.BladeSkills;
+namespace Psionics.SoulKnife.Features.BladeSkills;
 
 /// <summary>
 /// Blade skills: Fire / Ice / Lightning / Thunder Blade. While the soulknife has the skill, each

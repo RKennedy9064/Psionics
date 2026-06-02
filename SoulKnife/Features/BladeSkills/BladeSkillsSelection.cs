@@ -8,10 +8,10 @@ using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Items.Weapons;
 using Kingmaker.Designers.Mechanics.Facts;
 using Kingmaker.Enums;
-using PsychicWarrior.Shared.Mechanics;
-using PsychicWarrior.Utils;
+using Psionics.Shared.Mechanics;
+using Psionics.Utils;
 
-namespace PsychicWarrior.SoulKnife.Features.BladeSkills;
+namespace Psionics.SoulKnife.Features.BladeSkills;
 
 public static class BladeSkillsSelection
 {

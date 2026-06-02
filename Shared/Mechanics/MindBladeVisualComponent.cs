@@ -4,7 +4,7 @@ using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Items.Weapons;
 using Kingmaker.UnitLogic;
 
-namespace PsychicWarrior.Shared.Mechanics;
+namespace Psionics.Shared.Mechanics;
 
 /// <summary>
 /// Carried by a mind blade weapon-entry feature. Records which real weapon the player chose and

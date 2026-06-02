@@ -4,9 +4,9 @@ using Kingmaker.Blueprints;
 using Kingmaker.UnitLogic.Buffs.Blueprints;
 using Kingmaker.Controllers.Combat;
 using Kingmaker.EntitySystem.Entities;
-using PsychicWarrior.Utils;
+using Psionics.Utils;
 
-namespace PsychicWarrior.HarmonyPatches;
+namespace Psionics.HarmonyPatches;
 
 /// <summary>
 /// Suppresses movement AoOs for units that have the UpTheWalls buff (i.e., focused + have the feat).

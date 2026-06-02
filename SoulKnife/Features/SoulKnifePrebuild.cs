@@ -7,9 +7,9 @@ using Kingmaker.Blueprints;
 using Kingmaker.Blueprints.Classes;
 using Kingmaker.Blueprints.Classes.Selection;
 using Kingmaker.EntitySystem.Stats;
-using PsychicWarrior.Utils;
+using Psionics.Utils;
 
-namespace PsychicWarrior.SoulKnife.Features;
+namespace Psionics.SoulKnife.Features;
 
 /// <summary>
 /// The Soulknife's recommended ("premade") build. Registering this and pointing the class at it via

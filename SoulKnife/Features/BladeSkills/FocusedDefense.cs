@@ -8,9 +8,9 @@ using BlueprintCore.Conditions.Builder.ContextEx;
 using BlueprintCore.Utils.Types;
 using Kingmaker.EntitySystem.Stats;
 using Kingmaker.Enums;
-using PsychicWarrior.Utils;
+using Psionics.Utils;
 
-namespace PsychicWarrior.SoulKnife.Features.BladeSkills;
+namespace Psionics.SoulKnife.Features.BladeSkills;
 
 /// <summary>
 /// Blade skill: Focused Defense. While maintaining psionic focus, add your Wisdom modifier as a

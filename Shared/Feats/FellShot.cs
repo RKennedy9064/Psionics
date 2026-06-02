@@ -14,10 +14,10 @@ using Kingmaker.Blueprints.Classes;
 using Kingmaker.EntitySystem.Stats;
 using Kingmaker.Enums;
 using Kingmaker.UnitLogic;
-using PsychicWarrior.HarmonyPatches;
-using PsychicWarrior.Utils;
+using Psionics.HarmonyPatches;
+using Psionics.Utils;
 
-namespace PsychicWarrior.Shared.Feats;
+namespace Psionics.Shared.Feats;
 
 public static class FellShot
 {

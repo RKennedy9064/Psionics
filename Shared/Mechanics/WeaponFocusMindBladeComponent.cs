@@ -5,7 +5,7 @@ using Kingmaker.PubSubSystem;
 using Kingmaker.RuleSystem.Rules;
 using Kingmaker.UnitLogic;
 
-namespace PsychicWarrior.Shared.Mechanics;
+namespace Psionics.Shared.Mechanics;
 
 [Serializable]
 public class WeaponFocusMindBladeComponent : UnitFactComponentDelegate,

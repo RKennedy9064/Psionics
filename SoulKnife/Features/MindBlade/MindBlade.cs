@@ -17,14 +17,14 @@ using Kingmaker.Enums;
 using Kingmaker.RuleSystem;
 using Kingmaker.UnitLogic.ActivatableAbilities;
 using Kingmaker.UnitLogic.FactLogic;
-using PsychicWarrior.Shared.Mechanics;
-using PsychicWarrior.Utils;
+using Psionics.Shared.Mechanics;
+using Psionics.Utils;
 
-namespace PsychicWarrior.SoulKnife.Features.MindBlade;
+namespace Psionics.SoulKnife.Features.MindBlade;
 
 public static class MindBlade
 {
-    private static readonly LogWrapper Log = LogWrapper.Get("PsychicWarrior");
+    private static readonly LogWrapper Log = LogWrapper.Get("Psionics");
 
     private static readonly HashSet<WeaponCategory> Excluded =
     [

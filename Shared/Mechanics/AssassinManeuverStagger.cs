@@ -6,9 +6,9 @@ using Kingmaker.RuleSystem;
 using Kingmaker.RuleSystem.Rules;
 using Kingmaker.UnitLogic;
 using Kingmaker.UnitLogic.Buffs.Blueprints;
-using PsychicWarrior.Utils;
+using Psionics.Utils;
 
-namespace PsychicWarrior.Shared.Mechanics;
+namespace Psionics.Shared.Mechanics;
 
 // On a hit while the Assassin maneuver buff is active, forces a Fortitude save (DC 10 + BAB).
 // On failure the target is staggered for a number of rounds equal to the attacker's Wisdom modifier.

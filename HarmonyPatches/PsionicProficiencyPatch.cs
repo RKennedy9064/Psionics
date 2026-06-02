@@ -6,9 +6,9 @@ using Kingmaker.Blueprints.Classes;
 using Kingmaker.Blueprints.Classes.Prerequisites;
 using Kingmaker.EntitySystem.Stats;
 using Kingmaker.UnitLogic;
-using PsychicWarrior.Utils;
+using Psionics.Utils;
 
-namespace PsychicWarrior.HarmonyPatches;
+namespace Psionics.HarmonyPatches;
 
 /// <summary>
 /// Psionic Proficiency (Ex): A psychic warrior treats his base attack bonus as equal to his psychic

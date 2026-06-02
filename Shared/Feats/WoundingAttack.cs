@@ -17,10 +17,10 @@ using Kingmaker.RuleSystem.Rules.Damage;
 using Kingmaker.UnitLogic.Abilities.Blueprints;
 using Kingmaker.UnitLogic.Commands.Base;
 using Kingmaker.Visual.Animation.Kingmaker.Actions;
-using PsychicWarrior.HarmonyPatches;
-using PsychicWarrior.Utils;
+using Psionics.HarmonyPatches;
+using Psionics.Utils;
 
-namespace PsychicWarrior.Shared.Feats;
+namespace Psionics.Shared.Feats;
 
 public static class WoundingAttack
 {

@@ -16,9 +16,9 @@ using Kingmaker.UnitLogic.Abilities.Components;
 using Kingmaker.UnitLogic.ActivatableAbilities;
 using Kingmaker.UnitLogic.Commands.Base;
 using Kingmaker.Visual.Animation.Kingmaker.Actions;
-using PsychicWarrior.Utils;
+using Psionics.Utils;
 
-namespace PsychicWarrior.SoulKnife.Features.BladeSkills;
+namespace Psionics.SoulKnife.Features.BladeSkills;
 
 /// <summary>
 /// Mobility blade skills: Ghost Step and Cleave Space (focus-fueled teleports, reusing the base
