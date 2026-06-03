@@ -264,6 +264,9 @@ public static class MindBlade
             .SetIcon(icon)
             .SetBuff(buff)
             .SetActivationType(AbilityActivationType.Immediately)
+            // Instant dismiss (like the kineticist's kinetic blade): without this, DeactivateImmediately
+            // defaults to false and the blade lingers until the round ticks over.
+            .SetDeactivateImmediately(true)
             .SetGroup(ActivatableAbilityGroup.None)
             .Configure();
 

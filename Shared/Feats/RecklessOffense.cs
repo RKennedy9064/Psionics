@@ -37,6 +37,7 @@ public static class RecklessOffense
             .SetIcon(FeatureRefs.PowerAttackFeature.Reference.Get().Icon)
             .SetBuff(buff)
             .SetActivationType(AbilityActivationType.Immediately)
+            .SetDeactivateImmediately(true)
             .SetGroup(ActivatableAbilityGroup.None)
             .Configure();
 

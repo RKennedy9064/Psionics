@@ -62,6 +62,7 @@ internal static class TranceHelper
             .SetGroup(ActivatableAbilityGroup.BarbarianStance)
             .SetActivationType(AbilityActivationType.WithUnitCommand)
             .SetActivateWithUnitCommand(UnitCommand.CommandType.Standard)
+            .SetDeactivateImmediately(true)
             .SetIsOnByDefault(false)
             .AddRestrictionHasFact(feature: Guids.PsionicFocusBuff)
             .Configure();

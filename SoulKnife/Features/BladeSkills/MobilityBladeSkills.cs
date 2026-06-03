@@ -128,6 +128,7 @@ public static class MobilityBladeSkills
             .SetIcon(AbilityRefs.EnlargePerson.Reference.Get().Icon)
             .SetBuff(buff)
             .SetActivationType(AbilityActivationType.Immediately)
+            .SetDeactivateImmediately(true)
             .SetGroup(ActivatableAbilityGroup.None)
             .Configure();
 

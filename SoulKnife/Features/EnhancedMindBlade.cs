@@ -68,6 +68,7 @@ public static class EnhancedMindBlade
             .SetIcon(enhIcon)
             .SetBuff(enhBuff)
             .SetActivationType(AbilityActivationType.Immediately)
+            .SetDeactivateImmediately(true) // apply/remove the enhancement bonus instantly, not next round
             .SetGroup(ActivatableAbilityGroup.None)
             // Display-only resource logic: shows the remaining pool on the icon (the action bar only draws a
             // count for abilities that have resource logic) but never spends — the enhance toggle consumes
@@ -124,6 +125,7 @@ public static class EnhancedMindBlade
                 .SetIcon(a.Icon)
                 .SetBuff(buff)
                 .SetActivationType(AbilityActivationType.Immediately)
+                .SetDeactivateImmediately(true) // apply/remove the enchantment instantly, not next round
                 .SetGroup(ActivatableAbilityGroup.None)
                 // Display-only resource logic (Never): the engine shows the pool's remaining count on the
                 // icon and darkens the toggle when the pool hits 0, but does NOT spend/refund on its own

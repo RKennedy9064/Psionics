@@ -205,6 +205,7 @@ public static class MartialPower
             .SetBuff(activeBuffGuid)
             .SetGroup(ActivatableAbilityGroup.CombatManeuverStrike)
             .SetActivationType(AbilityActivationType.Immediately)
+            .SetDeactivateImmediately(true)
             .SetIsOnByDefault(false)
             .Configure();
     }

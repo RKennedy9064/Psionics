@@ -184,6 +184,7 @@ public static class CallWeaponry
             .SetIcon(icon)
             .SetBuff(buff)
             .SetActivationType(AbilityActivationType.Immediately)
+            .SetDeactivateImmediately(true) // dismiss the called weapon instantly, not next round
             .SetGroup(ActivatableAbilityGroup.None)
             .Configure();
 
