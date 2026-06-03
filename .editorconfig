@@ -1,0 +1,27 @@
+root = true
+
+[*.cs]
+# Harmony patches require __ prefixed parameter names by convention
+dotnet_diagnostic.CA1707.severity = none
+
+# Broad catch is intentional throughout — a single feature failing must not abort mod init
+dotnet_diagnostic.CA1031.severity = none
+
+# MD5 is used for deterministic GUID generation only, not cryptography
+dotnet_diagnostic.CA5351.severity = none
+
+# Type names that incidentally match framework namespaces (Burst, Compression, Main)
+dotnet_diagnostic.CA1724.severity = none
+
+# Game engine guarantees rulebook event parameters are non-null
+dotnet_diagnostic.CA1062.severity = none
+
+# List<T> is acceptable for internal-use collections
+dotnet_diagnostic.CA1002.severity = none
+
+# "guid" is a clear parameter name in this context
+dotnet_diagnostic.CA1720.severity = none
+
+# Public fields required for WotR blueprint serialization
+dotnet_diagnostic.CA1051.severity = none
+dotnet_diagnostic.CA2211.severity = none

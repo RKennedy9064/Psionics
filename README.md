@@ -1,177 +1,93 @@
-# PsychicWarrior — WotR Mod
+# Psionics — WotR Mod
 
-A Pathfinder: Wrath of the Righteous mod that adds the **Psychic Warrior** class, based on the Pathfinder 1e *Psionic Unleashed* rules. The class blends martial combat with psionic powers, using a focus-based resource system instead of spell slots.
+A *Pathfinder: Wrath of the Righteous* mod that adds psionic classes based on the Pathfinder 1e
+**Psionics Unleashed** rules. Instead of spell slots, psionics run on **Psionic Focus** — a resource you
+gain and expend to power abilities and feats. The mod currently includes two full classes:
 
----
+- **Psychic Warrior** — a martial manifester who augments combat with psionic powers and Warrior Paths.
+- **Soulknife** — a warrior who manifests a weapon of pure mental energy and customizes it through Blade Skills.
 
-## Overview
-
-The Psychic Warrior is a full BAB martial class that manifests psychic powers through a unique resource called **Psionic Focus**. Powers are organized into a spellbook (0–6th level), and the class gains **Psychic Warrior Paths** that grant bonus feats and thematic power access at 1st, 3rd, and 7th level.
-
-### Class Features
-
-- **Psionic Focus** — Spend a swift action to gain focus; expend focus to activate certain powers and feats
-- **Talents** — 0-level powers chosen at character creation
-- **Manifesting** — Powers known scaling with level; uses a Wisdom-based power point economy adapted to WotR's spellbook system
-- **Bonus Feats** — Combat or psionic feats at 1st and every even level
-- **Paths** — 12 distinct warrior paths, each granting a unique feature at 1st, 3rd, and 7th path level
-- **Eternal Warrior** — Level 20 capstone
+Both share a common library of psionic feats and the focus system.
 
 ---
 
-## WotR Mechanical Adaptations
+## Psychic Warrior
 
-Several tabletop rules had to be adapted or replaced due to engine limitations:
+A full-BAB martial class (d8) that manifests psychic powers through a Wisdom-flavored, focus-based
+spellbook (0–6th level). It trades raw caster power for durability and battlefield presence.
 
-| Tabletop Rule | WotR Adaptation |
-|---|---|
-| Power point economy | Replaced with a per-day spell slot system; manifester level still drives all scaling |
-| Focus acquisition (move/swift action, Concentration check) | Simplified: gaining focus requires no skill check |
-| Psionic Weapon / Fist / Shot bonus damage | Appears as a separate entry in the combat log rather than being folded into the base attack roll |
-| Vigor temp HP | Capped to match *False Life* scaling rather than being uncapped as written |
-| Telekinetic Punch (tabletop: attack roll only, no save) | Added a Will save to negate, matching the *Telekinetic Punch* power it is based on |
+**Core features**
+- **Psionic Focus** — gain it with an action; expend it to fuel powers and many feats.
+- **Powers** — a broad library from 0–6th level (buffs, defenses, mobility, and damage), chosen as you level.
+- **Warrior Paths** — 12 themed paths (Weaponmaster, Brawler, Archer, Ascetic, Assassin, Dervish, Feral,
+  Gladiator, Infiltrator, Interceptor, Mind Knight, Survivor), each granting a trance, a maneuver, and a
+  signature feature at 1st/3rd/7th path level. **Advanced Path** feats and **Twisting Paths** pathweaving
+  expand and combine them later on.
+- **Bonus feats** — combat and psionic feats as you advance.
+- **Eternal Warrior** — 20th-level capstone.
 
 ---
 
-## Implemented Content
+## Soulknife
 
-### Powers
+A precision warrior (d10, full BAB, good Reflex & Will, light/medium armor and shields) who forms a
+**mind blade** and sharpens it with Blade Skills. Wisdom drives much of its combat.
 
-**0-Level Talents**
-- Burst — bonus land speed
-- Deceleration — slow an enemy
-- Empty Mind — +2 Will save
-- Minor Precognition — insight bonus to AC
-- Precognition (Defensive) — deflection bonus to AC
-- Telekinetic Punch — ranged touch attack, Will save for damage
-- Valor — morale bonus to saves vs fear
+**Core features**
+- **Form Mind Blade** — at 1st level, choose any weapon; your blade manifests as that weapon, inheriting its
+  look, reach, and category, with damage/crit normalized by form (light 1d6, one-handed 1d8, two-handed 2d6;
+  all 19‑20/×2). It's always magic, you're always proficient, and it summons/dismisses instantly.
+- **Psychic Strike** — charge the blade to deal bonus psychic damage on your next hit; recharge as a swift
+  action by expending focus.
+- **Blade Skills** — a customization pick every even level from a large list: Focused Offense/Defense
+  (Wisdom to attack & damage / AC), Deadly Blow (×3 crit), Exploding Critical, energy blades, Mind Blade
+  Finesse, Telekinetic Edge, and many more.
+- **Enhanced Mind Blade** — from 3rd level, a reconfigurable enhancement **pool** that grows with level.
+  Allocate it on the fly between a direct enhancement bonus and weapon special abilities (Flaming, Keen,
+  Brilliant Energy, the +2 bursts, etc.), each a toggle that shows its cost and the remaining pool.
+- **Mind-blade combat feats** — mind-blade versions of Greater Weapon Focus, Improved Critical, Weapon
+  Specialization, and Greater Weapon Specialization.
+- A **recommended build** is available on the class-selection screen.
 
-**1st Level**
-- Biofeedback — damage reduction
-- Expansion — enlarge person effect
-- Compression — reduce person effect
-- Force Screen — shield bonus to AC
-- Inertial Armor — armor bonus to AC
-- Metaphysical Claw — enhance natural weapons
-- Metaphysical Weapon — enhance a weapon
-- Thicken Skin — natural armor bonus
-- Vigor — temporary hit points (matches False Life)
+---
 
-**2nd Level**
-- Animal Affinity — ability score boost
-- Body Adjustment — heal HP
-- Body Purification — remove ability damage
-- Concealing Amorpha — 20% concealment
-- Detect Hostile Intent — sense enemies
-- Hustle — bonus move action
-- Psionic Lion's Charge — full attack on a charge
-- Strength of My Enemy — steal strength from foe
+## Notable WotR adaptations
 
-**3rd Level**
-- Concealing Amorpha (Greater) — 50% concealment
-- Evade Burst — evasion for one round
-- Graft Weapon — bond a weapon to your hand
-- Keen Edge (Psionic) — keen weapon
-- Mental Barrier — deflection bonus to AC
-- Physical Acceleration — haste effect
-- Dimension Slide — short-range teleport
-- Ubiquitous Vision — all-around vision
-- Vampiric Blade — drain HP on hit
+A few tabletop rules were adapted to engine limits — most visibly:
 
-**4th Level**
-- Battle Transformation — polymorph
-- Dimension Door — teleport
-- Energy Adaptation — resist energy
-- Freedom of Movement
-- Inertial Barrier — DR 10/—
-- Steadfast Perception — true seeing lite
-- Weapon of Energy — add energy damage to weapon
-- Zealous Fury — rage-like combat boost
-
-**5th Level**
-- Adapt Body — environmental adaptation
-- True Metabolism — fast healing
-- True Seeing
-
-**6th Level**
-- Body of Iron — iron golem transformation
-- Disintegrate (Psionic)
-- Mind Blank (Personal, Psionic)
-- Oak Body — wooden golem transformation
-
-### Feats
-
-**Psionic Combat Feats**
-- Psionic Weapon — 1d6–4d6 force damage on melee attacks while focused
-- Greater Psionic Weapon — additional 1d6–4d6 force damage on melee attacks (stacks)
-- Psionic Fist — 1d6–4d6 force damage on unarmed/natural attacks while focused
-- Greater Psionic Fist — additional scaling damage (stacks)
-- Psionic Shot — 1d6–4d6 force damage on ranged attacks while focused
-- Greater Psionic Shot — additional scaling damage (stacks)
-- Deep Impact — spend focus to ignore target's armor on a melee touch attack
-- Psionic Critical — spend focus to auto-confirm a critical hit
-- Aligned Attack — spend focus to bypass alignment DR
-- Wounding Attack — spend focus to deal Constitution damage
-- Fell Shot — spend focus for a ranged touch attack
-- Unavoidable Strike — spend focus for a melee touch attack
-
-**Psionic Utility Feats**
-- Gain Psionic Focus — prerequisite for all psionic feats
-- Psionic Meditation — regain focus as a swift action while stationary
-- Psionic Body — +2 HP per psionic feat
-- Psionic Dodge — +1 dodge AC while focused
-- Psionic Endowment — +1 to DC of manifested powers while focused
-- Speed of Thought — +10 ft movement while focused
-- Up the Walls — no attacks of opportunity when moving while focused
-- Combat Manifestation — reduce concentration penalties when manifesting in combat
-- Rapid Metabolism — fast healing 1 per round
-- Reckless Offense — trade AC for attack bonus
-- Intuitive Fighting — use Wisdom instead of Dexterity for combat maneuvers
-- Critical Refocus — regain focus on a confirmed critical hit
-
-### Paths
-
-| Path | Theme |
-|---|---|
-| Weaponmaster | Weapon focus, martial mastery |
-| Brawler | Unarmed and grapple |
-| Archer | Ranged combat |
-| Ascetic | Monk-like discipline |
-| Assassin's | Stealth and sneak attack |
-| Dervish | Two-weapon and mobility |
-| Feral Warrior | Natural weapons and beast affinity |
-| Gladiator | Intimidation and performance |
-| Infiltrator | Skills and deception |
-| Interceptor | Defense and counter-attacks |
-| Mind Knight | Mental discipline and defense |
-| Survivor | Resilience and healing |
-
-Twisting Paths pathweaving allows multipath feat selection at later levels.
+- **No power points.** Manifesting uses a per-day, spellbook-style economy; manifester level still drives all
+  scaling. Metapsionic feats (which edit power-point cost) are therefore not included.
+- **Gaining focus needs no skill check.**
+- **Psionic Weapon/Fist/Shot** bonus damage shows as its own combat-log entry rather than folding into the hit.
+- The **mind blade** normalizes damage and crit by form, so weapon-type feats use mind-blade-specific
+  versions (e.g. Improved Critical (Mind Blade)).
 
 ---
 
 ## Build & Deploy
 
-### Prerequisites
+**Prerequisites**
+- [Unity Mod Manager](https://www.nexusmods.com/site/mods/21), patched into the game.
+- .NET SDK (net472 target) or Visual Studio 2022.
+- Game at the default Steam path; otherwise edit `<WrathPath>` in [Psionics.csproj](Psionics.csproj).
 
-- [Unity Mod Manager](https://www.nexusmods.com/site/mods/21) installed and patched into *Pathfinder: Wrath of the Righteous*
-- Visual Studio 2022 or the .NET SDK (net472 target)
-- Game installed at the default Steam path: `C:\Program Files (x86)\Steam\steamapps\common\Pathfinder Second Adventure`
-
-If your game is installed elsewhere, update the `<WrathPath>` property in [PsychicWarrior.csproj](PsychicWarrior.csproj).
-
-### Building
-
+**Build**
 ```
 dotnet build
 ```
+The PostBuild step copies `Psionics.dll`, `Info.json`, and `BlueprintCore.dll` into
+`$(WrathPath)\Mods\PsychicWarrior\`. Launch through Steam; UMM loads the mod on startup. Mod log lines in
+`Player.log` are prefixed `[Psionics]`.
 
-The PostBuild target automatically copies three files to `$(WrathPath)\Mods\PsychicWarrior\`:
+---
 
-- `PsychicWarrior.dll` — the mod assembly
-- `Info.json` — UMM manifest
-- `BlueprintCore.dll` — BlueprintCore runtime dependency
+## Save compatibility & renaming
 
-### Running
+The mod's **UMM id stays `PsychicWarrior`** even though it now displays as "Psionics" — UMM tracks saves by
+id, so keeping it means existing characters load with no "missing mod" warning. Only the **DisplayName**
+(and the C# project/namespaces/DLL) became *Psionics*; those are safe because mod-created blueprints are
+rebuilt from code every launch and are never persisted in saves.
 
-Launch the game normally through Steam. UMM will load the mod on startup. Errors are written to `Player.log` (in the game's `%AppData%` folder) and prefixed with `[PsychicWarrior]`.
+**The one rule that must never break:** never change a GUID in [Guids.cs](Utils/Guids.cs). Saves store
+blueprint references by GUID — change one and the matching feat/buff/feature is silently stripped from any
+character that had it. Renames are recoverable; GUID changes are not.

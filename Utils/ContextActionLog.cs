@@ -4,7 +4,7 @@ using Kingmaker.Enums;
 using Kingmaker.UnitLogic.Mechanics;
 using Kingmaker.UnitLogic.Mechanics.Actions;
 
-namespace PsychicWarrior.Utils;
+namespace Psionics.Utils;
 
 /// <summary>
 /// Drop into any ActionsBuilder chain to emit a debug line to Player.log.

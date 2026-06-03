@@ -1,5 +1,30 @@
 # Changelog
 
+## [0.2.0] - 2026-06-01
+
+### Added
+- Soulknife class (Phase 1 skeleton): full BAB, d10 HD, good Reflex and Will saves, appears in character creation and levels to 20
+- Form Mind Blade: at 1st level, choose the weapon your mind blade manifests as. The blade's damage and critical range are set by the weapon's form — light (1d6), one-handed (1d8), or two-handed (2d6), all 19-20/×2 — and the blade takes on the chosen weapon's appearance. Toggle it on your action bar to summon or dismiss the weapon, which is bound to your primary hand while active. You are always proficient with your mind blade, and it counts as a magic weapon.
+- Enhanced Mind Blade: at 3rd level the mind blade gains an enhancement pool that grows with level (up to +9 points). Allocate it between weapon special abilities (one toggle each) and a direct enhancement bonus via the "Enhance Mind Blade" eat-all toggle (capped at the level's max direct bonus: +1 at 3rd, +2 at 7th, +3 at 9th, +4 at 13th, +5 at 15th). Special abilities unlock by level: +1 abilities (Flaming, Frost, Shock, Corrosive, Keen, Ghost Touch, Vicious, Agile) at 5th level, +2 abilities (Flaming Burst, Icy Burst, Shocking Burst, Corrosive Burst, Holy, Unholy, Anarchic, Axiomatic) at 7th, and Brilliant Energy at 12th. Toggle abilities first, then enable the enhancement toggle to spend the remaining points
+- Weapon Focus (Mind Blade): available as a 1st-level soulknife bonus feat, granting +1 to attack rolls with your mind blade
+- Soulknife bonus feat at 1st level: choose Weapon Focus (Mind Blade), Power Attack, or Two-Weapon Fighting (Two-Weapon Fighting may be chosen without meeting its normal Dexterity requirement)
+- Psychic Strike: imbue the mind blade with destructive psychic energy (1d8 at 3rd level, scaling every four levels); charge persists through misses and can be recharged as a swift action by expending psionic focus
+- Blade Skills selection (every even level), including: Focused Offense (Wisdom to attack and damage), Focused Defense (Wisdom dodge AC), Evasion and Improved Evasion, Mind Blade Finesse (Dexterity to hit in any form), Deadly Blow (×3 critical multiplier), Exploding Critical, Powerful Strikes, Telekinetic Edge (ignore DR), Improved Enhancement, Knife to the Soul / Devastating Blade, Reaper's Blade, Vampiric Blade, Trapfinder, Telekinetic Athleticism, Psionic Training (gain a psionic feat); energy blades (Fire/Ice/Lightning/Thunder + their riders); and status/utility strikes (Stunning, Dazzling, Wing Clip, Dispelling Strike, Psychokinetic Blast, Mark of the Challenger, Reaching Blade, Furious Charge)
+- Soulknife recommended build: the class-selection screen now shows a "Premade Build Balance" chart and a "Use Recommended Build" button (a two-handed mind-blade striker)
+- Mind-blade combat feats: Greater Weapon Focus, Improved Critical, Weapon Specialization, and Greater Weapon Specialization — versions that work with the mind blade (require Weapon Focus (Mind Blade); fighter-level prerequisites relaxed to base attack bonus so mind-blade classes can take them)
+- New psionic feats: Greater Psionic Endowment (+2 to power save DCs while focused), Extra Blade Skill (gain an additional blade skill, repeatable), and Intuitive Shot (add your Wisdom modifier to ranged damage while focused)
+
+### Changed
+- Renamed the mod to **Psionics** to reflect its expanded scope (Psychic Warrior and Soulknife). Existing saves and installs are unaffected — the mod's internal id is unchanged; only the display name changed
+- All psionic toggles now activate **and deactivate instantly** instead of at the end of the round: mind blade form (summon/dismiss), the Enhanced Mind Blade enhancement/ability toggles, Psychic Warrior trances, Mind Knight's Call Weaponry, Reckless Offense, Reaching Blade, and Martial Power
+- Enhanced Mind Blade ability toggles now show the remaining enhancement-pool points on their icons and darken when you can't afford them; the "Enhance Mind Blade" toggle also displays the pool and now defaults to **off**
+- Enhanced Mind Blade ability toggles now describe what each weapon special ability actually does, rather than just naming it
+
+### Fixed
+- Enhanced Mind Blade: turning an ability off now refunds its pool points immediately; the pool updates correctly on level-up (previously stuck until you rested); and ability toggles can be switched on/off reliably
+- Fixed a crash when a soulknife reached 3rd level (duplicate localization key in the Enhanced Mind Blade setup)
+- Enhanced Mind Blade special abilities now apply and clear instantly when toggled
+
 ## [0.1.4] - 2026-05-31
 
 ### Added

@@ -1,7 +1,7 @@
 using BlueprintCore.Utils;
 using Kingmaker.Localization;
 
-namespace PsychicWarrior.Utils;
+namespace Psionics.Utils;
 
 /// <summary>
 /// Thin wrapper around <see cref="LocalizationTool.CreateString"/> that defaults

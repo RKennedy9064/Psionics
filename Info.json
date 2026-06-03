@@ -1,9 +1,9 @@
 {
   "Id": "PsychicWarrior",
-  "DisplayName": "PsychicWarrior",
+  "DisplayName": "Psionics",
   "Author": "rkennedy9064",
-  "Version": "0.1.4",
+  "Version": "0.2.0",
   "ManagerVersion": "0.24.0",
-  "AssemblyName": "PsychicWarrior.dll",
-  "EntryMethod": "PsychicWarrior.Main.Load"
+  "AssemblyName": "Psionics.dll",
+  "EntryMethod": "Psionics.Main.Load"
 }

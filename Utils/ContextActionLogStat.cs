@@ -2,7 +2,7 @@ using System;
 using Kingmaker.EntitySystem.Stats;
 using Kingmaker.UnitLogic.Mechanics.Actions;
 
-namespace PsychicWarrior.Utils;
+namespace Psionics.Utils;
 
 /// <summary>
 /// Reads a single stat off the caster and emits it to Player.log.

@@ -6,9 +6,9 @@ using Kingmaker.Blueprints.Classes;
 using Kingmaker.Blueprints.Classes.Prerequisites;
 using Kingmaker.EntitySystem.Stats;
 using Kingmaker.UnitLogic;
-using PsychicWarrior.Utils;
+using Psionics.Utils;
 
-namespace PsychicWarrior.HarmonyPatches;
+namespace Psionics.HarmonyPatches;
 
 /// <summary>
 /// Psionic Proficiency (Ex): A psychic warrior treats his base attack bonus as equal to his psychic
@@ -53,10 +53,7 @@ public static class PsionicProficiencyPatch
         if (owner == null) return;
         if (!PsionicFeatGuids.Contains(owner.AssetGuid.ToString())) return;
 
-        if (_pwClass == null)
-        {
-            _pwClass = BlueprintTool.Get<BlueprintCharacterClass>(Guids.PsychicWarriorClass);
-        }
+        _pwClass ??= BlueprintTool.Get<BlueprintCharacterClass>(Guids.PsychicWarriorClass);
         if (_pwClass == null) return;
 
         var pwLevel = unit.Progression.GetClassLevel(_pwClass);

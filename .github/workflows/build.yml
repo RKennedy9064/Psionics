@@ -41,8 +41,8 @@ jobs:
           $version = (Get-Content Info.json | ConvertFrom-Json).Version
           Write-Host "Releasing version: $version"
           $out = "bin\Release\net472"
-          $zip = "PsychicWarrior-$version.zip"
-          Compress-Archive -Path "$out\PsychicWarrior.dll", "$out\BlueprintCore.dll", "$out\Info.json" `
+          $zip = "Psionics-$version.zip"
+          Compress-Archive -Path "$out\Psionics.dll", "$out\BlueprintCore.dll", "$out\Info.json" `
             -DestinationPath $zip
           gh release delete "v$version" --yes --cleanup-tag --repo ${{ github.repository }} 2>$null
           gh release create "v$version" $zip `
