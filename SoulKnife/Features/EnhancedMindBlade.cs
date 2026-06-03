@@ -38,22 +38,18 @@ public static class EnhancedMindBlade
         var enhIcon = AbilityRefs.MagicWeaponGreater.Reference.Get().Icon;
         MindBladeEnchantments.AbilityToggleCosts.Clear();
 
-        // The enhancement pool resource. Its max scales with soulknife level (= MindBladeEnchantments.GetPool):
-        // 1 at level 3, +1 every 2 levels (matching min(9,(lvl-1)/2)). Each ability toggle draws from it; the
-        // game shows the remaining amount on the toggle icons and darkens toggles that can't be afforded.
+        // The enhancement pool resource exists only to DISPLAY the remaining points on the toggle icons
+        // and to drive the engine's "not enough resource -> darken" check. Its current amount is the single
+        // source of truth, set by MindBladeEnchantments.Recompute (= GetPool minus active reservations).
+        // The max is a flat ceiling, deliberately NOT level-scaled: a level-scaled max recalculates a beat
+        // *after* level-up, which would cap our post-level-up Restore at the old value (pool stuck low until
+        // rest/toggle). A flat ceiling >= the real cap (9, or 10 with Improved Enhancement) avoids that.
         AbilityResourceConfigurator.New("SKEnhMindBladePool", Guids.EnhancedMindBladePoolResource)
             .SetLocalizedName(Loc.Str("SK.EMB.Pool.Name", "Mind Blade Enhancement Pool", tagEncyclopediaEntries: false))
             .SetLocalizedDescription(Loc.Str("SK.EMB.Pool.Desc",
                 "Points the soulknife allocates among her mind blade's weapon special abilities.", tagEncyclopediaEntries: false))
             .SetIcon(enhIcon)
-            .SetMaxAmount(
-                ResourceAmountBuilder.New(0)
-                    .IncreaseByLevelStartPlusDivStep(
-                        classes: [Guids.SoulKnifeClass],
-                        startingLevel: 3,
-                        startingBonus: 1,
-                        levelsPerStep: 2,
-                        bonusPerStep: 1))
+            .SetMaxAmount(ResourceAmountBuilder.New(10))
             .Configure();
 
         // The eat-all enhancement toggle.
@@ -73,7 +69,6 @@ public static class EnhancedMindBlade
             .SetBuff(enhBuff)
             .SetActivationType(AbilityActivationType.Immediately)
             .SetGroup(ActivatableAbilityGroup.None)
-            .SetIsOnByDefault(true)
             // Display-only resource logic: shows the remaining pool on the icon (the action bar only draws a
             // count for abilities that have resource logic) but never spends — the enhance toggle consumes
             // whatever the ability toggles leave behind, computed in MindBladeEnchantments.Recompute.
@@ -84,25 +79,25 @@ public static class EnhancedMindBlade
 
         // Ability table (cost = +N equivalent, ReqLevel = soulknife level the ability unlocks).
         // Only standard WotR enchantments with clean generic refs.
-        var abilities = new (string Key, string Name, int Cost, int ReqLevel, string Ench, UnityEngine.Sprite Icon)[]
+        var abilities = new (string Key, string Name, int Cost, int ReqLevel, string Ench, string Effect, UnityEngine.Sprite Icon)[]
         {
-            ("Flaming",        "Flaming",         1, 5,  WeaponEnchantmentRefs.Flaming.Reference.Guid.ToString(),        AbilityRefs.BurningHands.Reference.Get().Icon),
-            ("Frost",          "Frost",           1, 5,  WeaponEnchantmentRefs.Frost.Reference.Guid.ToString(),          AbilityRefs.RayOfFrost.Reference.Get().Icon),
-            ("Shock",          "Shock",           1, 5,  WeaponEnchantmentRefs.Shock.Reference.Guid.ToString(),          AbilityRefs.CallLightning.Reference.Get().Icon),
-            ("Corrosive",      "Corrosive",       1, 5,  WeaponEnchantmentRefs.Corrosive.Reference.Guid.ToString(),      AbilityRefs.AcidArrow.Reference.Get().Icon),
-            ("Keen",           "Keen",            1, 5,  WeaponEnchantmentRefs.Keen.Reference.Guid.ToString(),           AbilityRefs.KeenEdge.Reference.Get().Icon),
-            ("GhostTouch",     "Ghost Touch",     1, 5,  WeaponEnchantmentRefs.GhostTouch.Reference.Guid.ToString(),     AbilityRefs.Blur.Reference.Get().Icon),
-            ("Vicious",        "Vicious",         1, 5,  WeaponEnchantmentRefs.ViciousEnchantment.Reference.Guid.ToString(), AbilityRefs.Enervation.Reference.Get().Icon),
-            ("Agile",          "Agile",           1, 5,  WeaponEnchantmentRefs.Agile.Reference.Guid.ToString(),          FeatureRefs.WeaponFinesse.Reference.Get().Icon),
-            ("FlamingBurst",   "Flaming Burst",   2, 7,  WeaponEnchantmentRefs.FlamingBurst.Reference.Guid.ToString(),   AbilityRefs.BurningHands.Reference.Get().Icon),
-            ("IcyBurst",       "Icy Burst",       2, 7,  WeaponEnchantmentRefs.IcyBurst.Reference.Guid.ToString(),       AbilityRefs.RayOfFrost.Reference.Get().Icon),
-            ("ShockingBurst",  "Shocking Burst",  2, 7,  WeaponEnchantmentRefs.ShockingBurst.Reference.Guid.ToString(),  AbilityRefs.CallLightning.Reference.Get().Icon),
-            ("CorrosiveBurst", "Corrosive Burst", 2, 7,  WeaponEnchantmentRefs.CorrosiveBurst.Reference.Guid.ToString(), AbilityRefs.AcidArrow.Reference.Get().Icon),
-            ("Holy",           "Holy",            2, 7,  WeaponEnchantmentRefs.Holy.Reference.Guid.ToString(),           AbilityRefs.BlessWeapon.Reference.Get().Icon),
-            ("Unholy",         "Unholy",          2, 7,  WeaponEnchantmentRefs.Unholy.Reference.Guid.ToString(),         AbilityRefs.Enervation.Reference.Get().Icon),
-            ("Anarchic",       "Anarchic",        2, 7,  WeaponEnchantmentRefs.Anarchic.Reference.Guid.ToString(),       AbilityRefs.AlignWeapon.Reference.Get().Icon),
-            ("Axiomatic",      "Axiomatic",       2, 7,  WeaponEnchantmentRefs.Axiomatic.Reference.Guid.ToString(),      AbilityRefs.AlignWeapon.Reference.Get().Icon),
-            ("BrilliantEnergy","Brilliant Energy",4, 12, WeaponEnchantmentRefs.BrilliantEnergy.Reference.Guid.ToString(), AbilityRefs.MagicWeapon.Reference.Get().Icon),
+            ("Flaming",        "Flaming",         1, 5,  WeaponEnchantmentRefs.Flaming.Reference.Guid.ToString(),        "deals an extra 1d6 fire damage on each hit",                                                       AbilityRefs.BurningHands.Reference.Get().Icon),
+            ("Frost",          "Frost",           1, 5,  WeaponEnchantmentRefs.Frost.Reference.Guid.ToString(),          "deals an extra 1d6 cold damage on each hit",                                                       AbilityRefs.RayOfFrost.Reference.Get().Icon),
+            ("Shock",          "Shock",           1, 5,  WeaponEnchantmentRefs.Shock.Reference.Guid.ToString(),          "deals an extra 1d6 electricity damage on each hit",                                                AbilityRefs.CallLightning.Reference.Get().Icon),
+            ("Corrosive",      "Corrosive",       1, 5,  WeaponEnchantmentRefs.Corrosive.Reference.Guid.ToString(),      "deals an extra 1d6 acid damage on each hit",                                                       AbilityRefs.AcidArrow.Reference.Get().Icon),
+            ("Keen",           "Keen",            1, 5,  WeaponEnchantmentRefs.Keen.Reference.Guid.ToString(),           "doubles its critical threat range (19–20 becomes 17–20)",                                 AbilityRefs.KeenEdge.Reference.Get().Icon),
+            ("GhostTouch",     "Ghost Touch",     1, 5,  WeaponEnchantmentRefs.GhostTouch.Reference.Guid.ToString(),     "strikes incorporeal creatures as if they were corporeal",                                          AbilityRefs.Blur.Reference.Get().Icon),
+            ("Vicious",        "Vicious",         1, 5,  WeaponEnchantmentRefs.ViciousEnchantment.Reference.Guid.ToString(), "deals an extra 2d6 damage to the target on each hit (and 1d6 to you)",                          AbilityRefs.Enervation.Reference.Get().Icon),
+            ("Agile",          "Agile",           1, 5,  WeaponEnchantmentRefs.Agile.Reference.Guid.ToString(),          "uses your Dexterity modifier instead of Strength on damage rolls",                                 FeatureRefs.WeaponFinesse.Reference.Get().Icon),
+            ("FlamingBurst",   "Flaming Burst",   2, 7,  WeaponEnchantmentRefs.FlamingBurst.Reference.Guid.ToString(),   "deals an extra 1d6 fire damage on each hit, and bursts for extra fire damage on a critical hit (scaling with the critical multiplier)",   AbilityRefs.BurningHands.Reference.Get().Icon),
+            ("IcyBurst",       "Icy Burst",       2, 7,  WeaponEnchantmentRefs.IcyBurst.Reference.Guid.ToString(),       "deals an extra 1d6 cold damage on each hit, and bursts for extra cold damage on a critical hit (scaling with the critical multiplier)",   AbilityRefs.RayOfFrost.Reference.Get().Icon),
+            ("ShockingBurst",  "Shocking Burst",  2, 7,  WeaponEnchantmentRefs.ShockingBurst.Reference.Guid.ToString(),  "deals an extra 1d6 electricity damage on each hit, and bursts for extra electricity damage on a critical hit (scaling with the critical multiplier)", AbilityRefs.CallLightning.Reference.Get().Icon),
+            ("CorrosiveBurst", "Corrosive Burst", 2, 7,  WeaponEnchantmentRefs.CorrosiveBurst.Reference.Guid.ToString(), "deals an extra 1d6 acid damage on each hit, and bursts for extra acid damage on a critical hit (scaling with the critical multiplier)",   AbilityRefs.AcidArrow.Reference.Get().Icon),
+            ("Holy",           "Holy",            2, 7,  WeaponEnchantmentRefs.Holy.Reference.Guid.ToString(),           "deals an extra 2d6 damage to evil creatures on each hit",                                          AbilityRefs.BlessWeapon.Reference.Get().Icon),
+            ("Unholy",         "Unholy",          2, 7,  WeaponEnchantmentRefs.Unholy.Reference.Guid.ToString(),         "deals an extra 2d6 damage to good creatures on each hit",                                          AbilityRefs.Enervation.Reference.Get().Icon),
+            ("Anarchic",       "Anarchic",        2, 7,  WeaponEnchantmentRefs.Anarchic.Reference.Guid.ToString(),       "deals an extra 2d6 damage to lawful creatures on each hit",                                        AbilityRefs.AlignWeapon.Reference.Get().Icon),
+            ("Axiomatic",      "Axiomatic",       2, 7,  WeaponEnchantmentRefs.Axiomatic.Reference.Guid.ToString(),      "deals an extra 2d6 damage to chaotic creatures on each hit",                                       AbilityRefs.AlignWeapon.Reference.Get().Icon),
+            ("BrilliantEnergy","Brilliant Energy",4, 12, WeaponEnchantmentRefs.BrilliantEnergy.Reference.Guid.ToString(), "ignores armor, shields, and natural armor (resolves against touch AC); it cannot harm undead, constructs, or objects", AbilityRefs.MagicWeapon.Reference.Get().Icon),
         };
 
         // Group each ability's toggle GUID by the level at which it unlocks.
@@ -112,10 +107,11 @@ public static class EnhancedMindBlade
             var enchRef = BlueprintTool.GetRef<BlueprintWeaponEnchantmentReference>(a.Ench);
             MindBladeEnchantments.ManagedEnchantments.Add(enchRef);
 
+            var pts = $"{a.Cost} enhancement point{(a.Cost > 1 ? "s" : "")}";
             var buff = BuffConfigurator.New($"SKEMBBuff{a.Key}", Det($"SK.EMB.Buff.{a.Key}"))
                 .SetDisplayName(Loc.Str($"SK.EMB.{a.Key}.Name", a.Name))
                 .SetDescription(Loc.Str($"SK.EMB.{a.Key}.Desc",
-                    $"Your mind blade gains the {a.Name} weapon special ability (consumes {a.Cost} point{(a.Cost > 1 ? "s" : "")} from your enhancement pool)."))
+                    $"Your mind blade {a.Effect}. Costs {pts}."))
                 .SetIcon(a.Icon)
                 .AddComponent(new MindBladeEnchantComponent { Cost = a.Cost, Enchantment = enchRef })
                 .Configure();
@@ -124,19 +120,23 @@ public static class EnhancedMindBlade
             ActivatableAbilityConfigurator.New($"SKEMBToggle{a.Key}", toggleGuid)
                 .SetDisplayName(Loc.Str($"SK.EMB.{a.Key}.Name", a.Name))
                 .SetDescription(Loc.Str($"SK.EMB.{a.Key}.ToggleDesc",
-                    $"Toggle. Your mind blade gains the {a.Name} weapon special ability (consumes {a.Cost} point{(a.Cost > 1 ? "s" : "")} from your enhancement pool)."))
+                    $"Toggle. Your mind blade {a.Effect}. Costs {pts} from your enhancement pool."))
                 .SetIcon(a.Icon)
                 .SetBuff(buff)
                 .SetActivationType(AbilityActivationType.Immediately)
                 .SetGroup(ActivatableAbilityGroup.None)
+                // Display-only resource logic (Never): the engine shows the pool's remaining count on the
+                // icon and darkens the toggle when the pool hits 0, but does NOT spend/refund on its own
+                // (its TurnOn spend never refunds on toggle-off). The live remaining count is managed by
+                // MindBladeEnchantments.Recompute, which runs on every toggle on/off, equip, and level-up.
                 .AddActivatableAbilityResourceLogic(
                     requiredResource: Guids.EnhancedMindBladePoolResource,
-                    spendType: ActivatableAbilityResourceLogic.ResourceSpendType.TurnOn)
+                    spendType: ActivatableAbilityResourceLogic.ResourceSpendType.Never)
                 .Configure();
 
-            // The resource logic above shows the remaining pool on the icon and darkens toggles when
-            // the pool hits 0; the cost map lets the Harmony patch charge >1 for +2/+4 abilities and
-            // darken them when fewer than their cost remain (see MindBladeEnchantPoolPatch).
+            // Cost map: lets the Harmony IsAvailable patch darken +2/+4 toggles when fewer than their
+            // cost remain in the pool (see MindBladeEnchantPoolPatch).
+            MindBladeEnchantments.AbilityToggleCosts[toggleGuid] = a.Cost;
             MindBladeEnchantments.AbilityToggleCosts[toggleGuid] = a.Cost;
 
             if (!tierToggles.TryGetValue(a.ReqLevel, out var list))
@@ -155,7 +155,9 @@ public static class EnhancedMindBlade
                 "Toggle special abilities first, then enable the enhancement toggle to spend the remaining points."))
             .SetIcon(enhIcon)
             .SetIsClassFeature()
-            .AddAbilityResources(resource: Guids.EnhancedMindBladePoolResource, restoreAmount: true)
+            // restoreAmount: false — the current amount is owned entirely by Recompute, so rest must not
+            // reset it to the flat max (which would briefly show 10 with toggles active).
+            .AddAbilityResources(resource: Guids.EnhancedMindBladePoolResource, restoreAmount: false)
             .AddFacts([Guids.EnhancedMindBladeEnhanceToggle])
             .Configure();
 

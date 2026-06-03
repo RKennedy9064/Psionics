@@ -43,6 +43,7 @@ public static class MindBladeEnchantments
 {
     private static BlueprintCharacterClass _skClass;
     private static BlueprintFeature _improvedEnhancement;
+    private static BlueprintAbilityResource _poolResource;
 
     // All enchantments this system manages (Enhancement1-5 + every ability); registered by
     // EnhancedMindBlade.Configure so Recompute can clear them before re-applying.
@@ -126,12 +127,31 @@ public static class MindBladeEnchantments
         foreach (var ench in abilityEnchants)
             item.AddEnchantment(ench, null);
 
-        if (enhanceToggle)
+        // The enhance "eat-all" toggle reserves (and grants) up to the level's max direct bonus from
+        // whatever the ability toggles leave; it does NOT yield those points back to abilities while on.
+        int pool = GetPool(owner);
+        int enhanceReserved = enhanceToggle ? Math.Max(0, Math.Min(GetMaxDirect(owner), pool - abilityCost)) : 0;
+        if (enhanceReserved > 0)
         {
-            int direct = Math.Min(GetMaxDirect(owner), GetPool(owner) - abilityCost);
-            var ench = EnhancementEnchant(direct);
+            var ench = EnhancementEnchant(enhanceReserved);
             if (ench != null) item.AddEnchantment(ench, null);
         }
+
+        // Single source of truth for the on-icon pool count: points left after ability + enhance
+        // reservations. Setting it here (on every toggle on/off, equip, and level-up) gives correct
+        // live display, darkening, and — crucially — refunds when a toggle is switched off.
+        SyncPoolDisplay(owner, Math.Max(0, pool - abilityCost - enhanceReserved));
+    }
+
+    private static void SyncPoolDisplay(UnitEntityData owner, int remaining)
+    {
+        _poolResource ??= BlueprintTool.Get<BlueprintAbilityResource>(Guids.EnhancedMindBladePoolResource);
+        if (_poolResource == null) return;
+
+        var res = owner.Resources;
+        int now = res.GetResourceAmount(_poolResource);
+        if (now < remaining) res.Restore(_poolResource, remaining - now);
+        else if (now > remaining) res.Spend(_poolResource, now - remaining);
     }
 
     private static BlueprintWeaponEnchantment EnhancementEnchant(int level) => level switch
