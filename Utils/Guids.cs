@@ -373,6 +373,10 @@ public static class Guids
     public const string UpTheWallsBuff = "855de559-b08f-43a3-b112-8f85e387796e";
     public const string PsionicEndowmentFeat = "9561b13f-d4fd-492f-83ae-85d0f8f9be2f";
     public const string PsionicEndowmentBuff = "75d54bb0-8061-4a60-a33c-832f6ed1f62f";
+    public const string GreaterPsionicEndowmentFeat = "a1c2e3f4-1b2c-4d3e-9f80-1a2b3c4d5e60";
+    public const string GreaterPsionicEndowmentBuff = "b2d3f4a5-2c3d-4e4f-8a91-2b3c4d5e6f71";
+    public const string ExtraBladeSkillFeat = "c3e4a5b6-3d4e-4f50-8b02-3c4d5e6f7a82";
+    public const string IntuitiveShotFeat = "d4f5b6c7-4e5f-4061-9c13-4d5e6f7a8b93";
     public const string PsionicCriticalFeat = "6c2ec38d-0160-4c01-951a-06a6066cb581";
     public const string WoundingAttackFeat = "ba41ef92-8813-441a-836d-95f58a07ba05";
     public const string WoundingAttackBuff = "1af891ea-7562-441d-84bb-4cd7a8f7a4c1";
@@ -615,6 +619,10 @@ public static class Guids
     // ── SoulKnife bonus feat ──────────────────────────────────────────────────
     public const string SoulKnifeBonusFeat           = "5a1bae8f-6196-4d6f-9016-7b85a31299c3";
     public const string WeaponFocusMindBlade         = "6b2cbf90-7297-4e70-a127-8c96b42300d4";
+    public const string GreaterWeaponFocusMindBlade  = "e5a6c7d8-5f60-4172-9d24-5e6f7a8b9c04";
+    public const string ImprovedCriticalMindBlade    = "f6b7d8e9-6a71-4283-8e35-6f7a8b9c0d15";
+    public const string WeaponSpecializationMindBlade        = "a7c8e9f0-7b82-4394-9f46-7a8b9c0d1e26";
+    public const string GreaterWeaponSpecializationMindBlade = "b8d9f0a1-8c93-44a5-8a57-8b9c0d1e2f37";
 
     // ── Call Weaponry (Mind Knight path) ─────────────────────────────────────
     // Per-weapon GUIDs are generated deterministically via MD5 in CallWeaponry.Configure().

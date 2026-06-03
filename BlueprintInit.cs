@@ -160,12 +160,14 @@ public static class BlueprintInit
         Run(nameof(Shared.Feats.GreaterPsionicWeapon), Shared.Feats.GreaterPsionicWeapon.Configure, logger);
         Run(nameof(Shared.Feats.GreaterPsionicFist), Shared.Feats.GreaterPsionicFist.Configure, logger);
         Run(nameof(Shared.Feats.GreaterPsionicShot), Shared.Feats.GreaterPsionicShot.Configure, logger);
+        Run(nameof(Shared.Feats.IntuitiveShot), Shared.Feats.IntuitiveShot.Configure, logger);
         // Tier 2 feats
         Run(nameof(Shared.Feats.RapidMetabolism), Shared.Feats.RapidMetabolism.Configure, logger);
         Run(nameof(Shared.Feats.CombatManifestation), Shared.Feats.CombatManifestation.Configure, logger);
         Run(nameof(Shared.Feats.DeepImpact), Shared.Feats.DeepImpact.Configure, logger);
         Run(nameof(Shared.Feats.UpTheWalls), Shared.Feats.UpTheWalls.Configure, logger);
         Run(nameof(Shared.Feats.PsionicEndowment), Shared.Feats.PsionicEndowment.Configure, logger);
+        Run(nameof(Shared.Feats.GreaterPsionicEndowment), Shared.Feats.GreaterPsionicEndowment.Configure, logger);
 
         // ── Tier 1 feats ──────────────────────────────────────────────────────
         Run(nameof(Shared.Feats.PsionicCritical), Shared.Feats.PsionicCritical.Configure, logger);
@@ -192,6 +194,7 @@ public static class BlueprintInit
         Run(nameof(SoulKnife.SoulKnifeProficiencies),                       SoulKnife.SoulKnifeProficiencies.Configure,                       logger);
         Run(nameof(SoulKnife.Features.MindBlade.MindBlade),                 SoulKnife.Features.MindBlade.MindBlade.Configure,                 logger);
         Run(nameof(SoulKnife.Features.MindBlade.WeaponFocusMindBlade),      SoulKnife.Features.MindBlade.WeaponFocusMindBlade.Configure,      logger);
+        Run(nameof(SoulKnife.Features.MindBlade.MindBladeWeaponFeats),      SoulKnife.Features.MindBlade.MindBladeWeaponFeats.Configure,      logger);
         Run(nameof(SoulKnife.Features.MindBlade.PsychicStrike),             SoulKnife.Features.MindBlade.PsychicStrike.Configure,             logger);
         Run(nameof(SoulKnife.Features.EnhancedMindBlade),                   SoulKnife.Features.EnhancedMindBlade.Configure,                   logger);
         Run(nameof(SoulKnife.Features.BladeSkills.FocusedOffense),         SoulKnife.Features.BladeSkills.FocusedOffense.Configure,          logger);
@@ -200,6 +203,8 @@ public static class BlueprintInit
         Run(nameof(SoulKnife.Features.BladeSkills.MobilityBladeSkills),     SoulKnife.Features.BladeSkills.MobilityBladeSkills.Configure,     logger);
         Run(nameof(SoulKnife.Features.BladeSkills.CombatBladeSkills),       SoulKnife.Features.BladeSkills.CombatBladeSkills.Configure,       logger);
         Run(nameof(SoulKnife.Features.BladeSkills.BladeSkillsSelection),    SoulKnife.Features.BladeSkills.BladeSkillsSelection.Configure,    logger);
+        // After BladeSkillsSelection: Extra Blade Skill mirrors its option list.
+        Run(nameof(SoulKnife.Features.BladeSkills.ExtraBladeSkill),         SoulKnife.Features.BladeSkills.ExtraBladeSkill.Configure,         logger);
         Run(nameof(SoulKnife.SoulKnifeClass),                               SoulKnife.SoulKnifeClass.Configure,                               logger);
         // Recommended build — after the class + its features/selections exist (drives the
         // "Premade Build Balance" radar + "Use Recommended Build" button on the class screen).
