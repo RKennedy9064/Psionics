@@ -1,6 +1,7 @@
 using System;
 using BlueprintCore.Utils;
 using Kingmaker.Blueprints.Classes;
+using Kingmaker.Enums.Damage;
 using Kingmaker.PubSubSystem;
 using Kingmaker.RuleSystem;
 using Kingmaker.RuleSystem.Rules;
@@ -52,7 +53,8 @@ public class ExplodingCriticalComponent : UnitFactComponentDelegate,
 
         focus.Remove();
 
-        var raw = WeaponInheritedDamage.Build(evt.Weapon, new DiceFormula(numDice, DiceType.D8), alignmentBypassAll: false);
+        // Force damage, matching Psychic Strike (it is psychic strike damage).
+        var raw = new EnergyDamage(new DiceFormula(numDice, DiceType.D8), DamageEnergyType.Magic);
         Rulebook.Trigger(new RuleDealDamage(evt.Initiator, evt.Target, new DamageBundle(raw))
         {
             Reason = new RuleReason(Fact),

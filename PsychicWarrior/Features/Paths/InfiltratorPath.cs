@@ -39,7 +39,7 @@ public static class InfiltratorPath
             {
                 b.AddStatBonus(descriptor: ModifierDescriptor.Competence, stat: StatType.SkillPersuasion, value: 1);
                 b.AddContextRankConfig(ContextRankConfigs.CasterLevel()
-                    .WithCustomProgression((2, 0), (6, 1), (10, 2), (14, 3), (18, 4), (20, 5)));
+                    .WithCustomProgression((3, 1), (7, 2), (11, 3), (15, 4), (19, 5)));
                 b.AddContextStatBonus(stat: StatType.SkillPersuasion, descriptor: ModifierDescriptor.Competence, value: ContextValues.Rank());
                 b.AddContextStatBonus(stat: StatType.AdditionalDamage, descriptor: ModifierDescriptor.Competence, value: ContextValues.Rank());
             });
@@ -69,7 +69,7 @@ public static class InfiltratorPath
                     .ApplyBuff(maneuverBuff, ContextDuration.Fixed(1)))
             .Configure();
 
-        // Expanded � Hidden Step: +20 speed (enhancement) + +6 stealth for 1 round
+        // Expanded � Hidden Step: +20 speed (enhancement) + +6 stealth for 1 round
         var expandedBuff = BuffConfigurator.New("InfiltratorExpandedManeuverBuff", Guids.InfiltratorExpandedBuff)
             .SetDisplayName(Loc.Str("PW.InfiltratorExpanded.BuffName", "Hidden Step"))
             .SetDescription(Loc.Str("PW.InfiltratorExpanded.BuffDesc",
@@ -109,7 +109,15 @@ public static class InfiltratorPath
         FeatureConfigurator.New("InfiltratorPath", Guids.InfiltratorPath)
             .SetDisplayName(Loc.Str("PW.InfiltratorPath.Name", "Infiltrator Path"))
             .SetDescription(Loc.Str("PW.InfiltratorPath.Desc",
-                "You focus on deception and precise lethal strikes. You gain +2 competence to Persuasion and +1 to damage (trance), and can expend psionic focus for enhanced menace (maneuver)."))
+                "You blend deception with precise, lethal strikes.\n" +
+                "\n" +
+                "Trance (3rd level): while focused, gain a +2 competence bonus to Persuasion and +1 to damage rolls, each increasing by +1 every four levels.\n" +
+                "\n" +
+                "Maneuver: expend psionic focus (swift action) to project a menacing aura — +4 competence to Persuasion and +2 competence to damage for 1 round.\n" +
+                "\n" +
+                "Expanded Maneuver: expend psionic focus to glide as a shadow — +20 ft speed and +6 competence to Stealth for 1 round.\n" +
+                "\n" +
+                "A second path can be chosen at 9th level."))
             .SetIcon(icon)
             .SetIsClassFeature()
             .AddFeatureOnClassLevel(feature: trance.ToString(), level: 3, clazz: Guids.PsychicWarriorClass)

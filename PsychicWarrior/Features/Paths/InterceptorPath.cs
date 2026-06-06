@@ -38,7 +38,7 @@ public static class InterceptorPath
             addBuffComponents: b =>
             {
                 b.AddContextRankConfig(ContextRankConfigs.CasterLevel()
-                    .WithCustomProgression((2, 0), (6, 1), (10, 2), (14, 3), (18, 4), (20, 5)));
+                    .WithCustomProgression((3, 1), (7, 2), (11, 3), (15, 4), (19, 5)));
                 b.AddContextStatBonus(stat: StatType.AdditionalAttackBonus, descriptor: ModifierDescriptor.Competence, value: ContextValues.Rank());
                 b.AddContextStatBonus(stat: StatType.AdditionalDamage, descriptor: ModifierDescriptor.Competence, value: ContextValues.Rank());
             });
@@ -68,11 +68,11 @@ public static class InterceptorPath
                     .ApplyBuff(maneuverBuff, ContextDuration.Fixed(1)))
             .Configure();
 
-        // Expanded — Save Another: DR 5/— for 1 round (take damage for allies)
+        // Expanded ï¿½ Save Another: DR 5/ï¿½ for 1 round (take damage for allies)
         var expandedBuff = BuffConfigurator.New("InterceptorExpandedManeuverBuff", Guids.InterceptorExpandedBuff)
             .SetDisplayName(Loc.Str("PW.InterceptorExpanded.BuffName", "Save Another"))
             .SetDescription(Loc.Str("PW.InterceptorExpanded.BuffDesc",
-                "You harden your body to absorb blows meant for allies: DR 5/— for 1 round."))
+                "You harden your body to absorb blows meant for allies: DR 5/ï¿½ for 1 round."))
             .SetIcon(expandedIcon)
             .AddComponent(new AddDamageResistancePhysical { Value = 5, BypassedByMaterial = false })
             .Configure();
@@ -80,7 +80,7 @@ public static class InterceptorPath
         var expandedAbility = AbilityConfigurator.New("InterceptorExpandedManeuverAbility", Guids.InterceptorExpandedAbility)
             .SetDisplayName(Loc.Str("PW.InterceptorExpandedAb.Name", "Save Another"))
             .SetDescription(Loc.Str("PW.InterceptorExpandedAb.Desc",
-                "Swift Action. Expend psionic focus to harden your body and absorb blows meant for allies: gain DR 5/— for 1 round."))
+                "Swift Action. Expend psionic focus to harden your body and absorb blows meant for allies: gain DR 5/ï¿½ for 1 round."))
             .SetIcon(maneuverIcon)
             .SetType(AbilityType.Extraordinary)
             .SetRange(AbilityRange.Personal)
@@ -97,7 +97,7 @@ public static class InterceptorPath
         FeatureConfigurator.New("InterceptorExpandedManeuver", Guids.InterceptorExpandedFeature)
             .SetDisplayName(Loc.Str("PW.InterceptorExpandedFeat.Name", "Save Another"))
             .SetDescription(Loc.Str("PW.InterceptorExpandedFeat.Desc",
-                "You learn the Save Another maneuver: a swift-action self-buff granting DR 5/— for 1 round."))
+                "You learn the Save Another maneuver: a swift-action self-buff granting DR 5/ï¿½ for 1 round."))
             .SetIcon(expandedIcon)
             .SetIsClassFeature()
             .AddFeatureIfHasFact(checkedFact: Guids.MartialPowerFeature, feature: Guids.MartialPowerInterceptorExpanded)
@@ -107,7 +107,15 @@ public static class InterceptorPath
         FeatureConfigurator.New("InterceptorPath", Guids.InterceptorPath)
             .SetDisplayName(Loc.Str("PW.InterceptorPath.Name", "Interceptor Path"))
             .SetDescription(Loc.Str("PW.InterceptorPath.Desc",
-                "You focus on protecting allies through aggressive counter-attacks. You gain +1 competence to attack and damage (trance) and can expend psionic focus for a +2 bonus to both (maneuver)."))
+                "You protect your allies through aggressive counter-attacks, turning psionic focus into both offense and defense.\n" +
+                "\n" +
+                "Trance (3rd level): while focused, gain a +1 competence bonus to attack and damage rolls, increasing by +1 for every four psychic warrior levels (+2 at 7th, +3 at 11th, +4 at 15th, +5 at 19th).\n" +
+                "\n" +
+                "Maneuver: expend psionic focus as a swift action to enter a counter-attack stance â€” +2 competence to attack and damage for 1 round.\n" +
+                "\n" +
+                "Expanded Maneuver (Save Another): expend psionic focus to harden your body and absorb blows meant for allies, gaining DR 5/â€” for 1 round.\n" +
+                "\n" +
+                "A second path can be chosen at 9th level."))
             .SetIcon(icon)
             .SetIsClassFeature()
             .AddFeatureOnClassLevel(feature: trance.ToString(), level: 3, clazz: Guids.PsychicWarriorClass)

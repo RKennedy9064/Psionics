@@ -107,7 +107,15 @@ public static class WeaponmasterPath
         FeatureConfigurator.New("WeaponmasterPath", Guids.WeaponmasterPath)
             .SetDisplayName(Loc.Str("PW.WeaponmasterPath.Name", "Weaponmaster Path"))
             .SetDescription(Loc.Str("PW.WeaponmasterPath.Desc",
-                "You focus on martial superiority in melee. You gain a +1 competence bonus to attack rolls (trance) and can expend psionic focus to enter a counter-attack stance (maneuver)."))
+                "You pursue martial superiority with manufactured weapons.\n" +
+                "\n" +
+                "Trance (3rd level): while focused, gain a +1 competence bonus to attack rolls with manufactured weapons, increasing by +1 every four levels (+2 at 7th, +3 at 11th, +4 at 15th, +5 at 19th).\n" +
+                "\n" +
+                "Maneuver: expend psionic focus (swift action) for a counter-attack stance — +2 dodge AC and +2 competence to your next attack for 1 round.\n" +
+                "\n" +
+                "Expanded Maneuver: expend psionic focus for a burst of momentum — +30 ft speed and +4 competence to attack rolls for 1 round.\n" +
+                "\n" +
+                "A second path can be chosen at 9th level."))
             .SetIcon(icon)
             .SetIsClassFeature()
             .AddFeatureOnClassLevel(feature: trance.ToString(), level: 3, clazz: Guids.PsychicWarriorClass)

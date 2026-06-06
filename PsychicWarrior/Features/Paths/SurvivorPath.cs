@@ -34,7 +34,7 @@ public static class SurvivorPath
             maneuverAbilityGuid: Guids.SurvivorManeuverAbility,
             expandedManeuverAbilityGuid: Guids.SurvivorExpandedAbility,
             displayName: "Survivor",
-            featureDescription: "Your psionic focus toughens your body. You gain DR 2/— and Mettle (when you succeed on a Fortitude or Will saving throw against an effect that normally allows a partial save, you instead take no effect at all).",
+            featureDescription: "Your psionic focus toughens your body. You gain DR 2/ï¿½ and Mettle (when you succeed on a Fortitude or Will saving throw against an effect that normally allows a partial save, you instead take no effect at all).",
             icon: icon,
             addBuffComponents: b =>
             {
@@ -69,11 +69,11 @@ public static class SurvivorPath
                     .ApplyBuff(maneuverBuff, ContextDuration.Fixed(1)))
             .Configure();
 
-        // Expanded — Survivor's Resolve: temp HP equal to caster level for 1 minute
+        // Expanded ï¿½ Survivor's Resolve: temp HP equal to caster level for 1 minute
         var expandedBuff = BuffConfigurator.New("SurvivorExpandedManeuverBuff", Guids.SurvivorExpandedBuff)
             .SetDisplayName(Loc.Str("PW.SurvivorExpanded.BuffName", "Survivor's Resolve"))
             .SetDescription(Loc.Str("PW.SurvivorExpanded.BuffDesc",
-                "Psionic resolve hardens flesh — temporary hit points equal to your manifester level."))
+                "Psionic resolve hardens flesh ï¿½ temporary hit points equal to your manifester level."))
             .SetIcon(expandedIcon)
             .AddTemporaryHitPointsFromAbilityValue(
                 descriptor: ModifierDescriptor.UntypedStackable,
@@ -111,7 +111,15 @@ public static class SurvivorPath
         FeatureConfigurator.New("SurvivorPath", Guids.SurvivorPath)
             .SetDisplayName(Loc.Str("PW.SurvivorPath.Name", "Survivor Path"))
             .SetDescription(Loc.Str("PW.SurvivorPath.Desc",
-                "You focus on endurance and resilience. Your trance grants DR 2/— and Mettle (partial-effect Fort/Will saves are negated entirely on a success). Your maneuver lets you expend psionic focus to spike your Fortitude and Will saves."))
+                "You endure punishment that would fell others.\n" +
+                "\n" +
+                "Trance (3rd level): while focused, gain DR 2/â€” and Mettle â€” when you succeed on a Fortitude or Will save against an effect that normally allows a partial save, you take no effect at all.\n" +
+                "\n" +
+                "Maneuver: expend psionic focus (swift action) for +4 competence to Fortitude and Will saves for 1 round.\n" +
+                "\n" +
+                "Expanded Maneuver (Survivor's Resolve): expend psionic focus to gain temporary hit points equal to your manifester level for 1 minute.\n" +
+                "\n" +
+                "A second path can be chosen at 9th level."))
             .SetIcon(icon)
             .SetIsClassFeature()
             .AddFeatureOnClassLevel(feature: trance.ToString(), level: 3, clazz: Guids.PsychicWarriorClass)

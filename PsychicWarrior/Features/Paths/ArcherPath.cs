@@ -40,7 +40,7 @@ public static class ArcherPath
             addBuffComponents: b =>
             {
                 b.AddContextRankConfig(ContextRankConfigs.CasterLevel()
-                    .WithCustomProgression((2, 0), (6, 1), (10, 2), (14, 3), (18, 4), (20, 5)));
+                    .WithCustomProgression((3, 1), (7, 2), (11, 3), (15, 4), (19, 5)));
                 b.AddComponent(new AttackTypeAttackBonus
                 {
                     Type = WeaponRangeType.Ranged,
@@ -75,11 +75,11 @@ public static class ArcherPath
                     .ApplyBuff(maneuverBuff, ContextDuration.Fixed(1)))
             .Configure();
 
-        // Expanded — Twin Shot: Haste-like acceleration for 1 round
+        // Expanded ï¿½ Twin Shot: Haste-like acceleration for 1 round
         var expandedBuff = BuffConfigurator.New("ArcherExpandedManeuverBuff", Guids.ArcherExpandedBuff)
             .SetDisplayName(Loc.Str("PW.ArcherExpanded.BuffName", "Twin Shot"))
             .SetDescription(Loc.Str("PW.ArcherExpanded.BuffDesc",
-                "Psionic acceleration drives your arms: gain the benefits of haste — extra attack on full attacks, +1 dodge AC, +1 Reflex, +30 ft speed."))
+                "Psionic acceleration drives your arms: gain the benefits of haste ï¿½ extra attack on full attacks, +1 dodge AC, +1 Reflex, +30 ft speed."))
             .SetIcon(expandedIcon)
             .AddStatBonus(descriptor: ModifierDescriptor.Dodge, stat: StatType.AC, value: 1)
             .AddStatBonus(descriptor: ModifierDescriptor.Dodge, stat: StatType.SaveReflex, value: 1)
@@ -118,7 +118,15 @@ public static class ArcherPath
         FeatureConfigurator.New("ArcherPath", Guids.ArcherPath)
             .SetDisplayName(Loc.Str("PW.ArcherPath.Name", "Archer Path"))
             .SetDescription(Loc.Str("PW.ArcherPath.Desc",
-                "You focus on ranged precision. You gain a +1 competence bonus to attack rolls (trance) and can expend psionic focus to enhance your next attack (maneuver)."))
+                "You focus your psionic discipline on ranged precision.\n" +
+                "\n" +
+                "Trance (3rd level): while focused, gain a +1 competence bonus to attack rolls with ranged or thrown weapons, increasing by +1 every four levels (+2 at 7th, +3 at 11th, +4 at 15th, +5 at 19th).\n" +
+                "\n" +
+                "Maneuver: expend psionic focus (swift action) to channel precision into your next attack â€” +4 competence to the attack roll.\n" +
+                "\n" +
+                "Expanded Maneuver (Twin Shot): expend psionic focus to gain the benefits of haste for 1 round (extra attack on a full attack, +1 dodge AC, +1 Reflex, +30 ft speed).\n" +
+                "\n" +
+                "A second path can be chosen at 9th level."))
             .SetIcon(icon)
             .SetIsClassFeature()
             .AddFeatureOnClassLevel(feature: trance.ToString(), level: 3, clazz: Guids.PsychicWarriorClass)

@@ -83,6 +83,11 @@ public static class MindBlade
 
                 // Map handedness → form toggle + custom weapon type + damage label.
                 // Double weapons (two ends) are detected first; they become a double mind blade.
+                // NOTE: classify light by m_IsLight, NOT one-handed by m_IsOneHanded. In WotR's vanilla
+                // weapon blueprints m_IsOneHanded is left false on nearly every weapon (only the Rapier
+                // sets it), and m_IsLight is what actually distinguishes light from one-handed. So we
+                // detect light explicitly and treat everything else (non-light, non-two-handed) as
+                // one-handed — otherwise longswords, scimitars, etc. wrongly fell through to light (1d6).
                 string toggleGuid, typeGuid, formLabel;
                 if (srcWeapon.Double)
                 {
@@ -96,17 +101,17 @@ public static class MindBlade
                     typeGuid   = Guids.MindBladeTwoHandedWeaponType;
                     formLabel  = "two-handed (2d6)";
                 }
-                else if (wtype.m_IsOneHanded)
-                {
-                    toggleGuid = oneToggle.AssetGuid.ToString();
-                    typeGuid   = Guids.MindBladeOneHandedWeaponType;
-                    formLabel  = "one-handed (1d8)";
-                }
-                else
+                else if (wtype.m_IsLight)
                 {
                     toggleGuid = lightToggle.AssetGuid.ToString();
                     typeGuid   = Guids.MindBladeLightWeaponType;
                     formLabel  = "light (1d6)";
+                }
+                else
+                {
+                    toggleGuid = oneToggle.AssetGuid.ToString();
+                    typeGuid   = Guids.MindBladeOneHandedWeaponType;
+                    formLabel  = "one-handed (1d8)";
                 }
 
                 conf = conf.AddToAllFeatures(MakeWeaponEntry(cat, weaponRef, toggleGuid, typeGuid, formLabel, icon));

@@ -69,7 +69,7 @@ public static class BrawlerPath
                     .ApplyBuff(maneuverBuff, ContextDuration.Fixed(1)))
             .Configure();
 
-        // Expanded � Steel Sinews: counter-attack reflex, +4 dodge AC + Fast Healing 2 for 1 round
+        // Expanded � Steel Sinews: counter-attack reflex, +4 dodge AC + Fast Healing 2 for 1 round
         var expandedBuff = BuffConfigurator.New("BrawlerExpandedManeuverBuff", Guids.BrawlerExpandedManeuverBuff)
             .SetDisplayName(Loc.Str("PW.BrawlerExpanded.BuffName", "Steel Sinews"))
             .SetDescription(Loc.Str("PW.BrawlerExpanded.BuffDesc",
@@ -109,8 +109,15 @@ public static class BrawlerPath
         FeatureConfigurator.New("BrawlerPath", Guids.BrawlerPath)
             .SetDisplayName(Loc.Str("PW.BrawlerPath.Name", "Brawler Path"))
             .SetDescription(Loc.Str("PW.BrawlerPath.Desc",
-                "You focus on close combat and grappling. Your Wisdom modifier adds to your CMB (trance) " +
-                "and you can expend psionic focus to deal +7 bonus damage on your next strike (maneuver)."))
+                "You overpower foes with grapples and close combat.\n" +
+                "\n" +
+                "Trance (3rd level): while focused, add your Wisdom modifier as a competence bonus to your Combat Maneuver Bonus.\n" +
+                "\n" +
+                "Maneuver: expend psionic focus (swift action) to channel energy into your next strike — +7 bonus damage on hit.\n" +
+                "\n" +
+                "Expanded Maneuver: expend psionic focus to harden your sinews — +4 dodge AC and Fast Healing 2 for 1 round.\n" +
+                "\n" +
+                "A second path can be chosen at 9th level."))
             .SetIcon(icon)
             .SetIsClassFeature()
             .AddFeatureOnClassLevel(feature: trance.ToString(), level: 3, clazz: Guids.PsychicWarriorClass)

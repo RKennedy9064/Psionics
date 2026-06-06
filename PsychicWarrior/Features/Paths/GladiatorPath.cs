@@ -38,7 +38,7 @@ public static class GladiatorPath
             addBuffComponents: b =>
             {
                 b.AddContextRankConfig(ContextRankConfigs.CasterLevel()
-                    .WithCustomProgression((2, 0), (6, 2), (10, 3), (14, 4), (18, 5), (20, 6)));
+                    .WithCustomProgression((3, 2), (7, 3), (11, 4), (15, 5), (19, 6)));
                 b.AddContextStatBonus(
                     stat: StatType.AdditionalCMB,
                     descriptor: ModifierDescriptor.Competence,
@@ -69,7 +69,7 @@ public static class GladiatorPath
                     .ApplyBuff(maneuverBuff, ContextDuration.Fixed(1)))
             .Configure();
 
-        // Expanded — Gladiator's Will: +4 competence to all saves for 1 round
+        // Expanded ï¿½ Gladiator's Will: +4 competence to all saves for 1 round
         var expandedBuff = BuffConfigurator.New("GladiatorExpandedManeuverBuff", Guids.GladiatorExpandedBuff)
             .SetDisplayName(Loc.Str("PW.GladiatorExpanded.BuffName", "Gladiator's Will"))
             .SetDescription(Loc.Str("PW.GladiatorExpanded.BuffDesc",
@@ -110,7 +110,15 @@ public static class GladiatorPath
         FeatureConfigurator.New("GladiatorPath", Guids.GladiatorPath)
             .SetDisplayName(Loc.Str("PW.GladiatorPath.Name", "Gladiator Path"))
             .SetDescription(Loc.Str("PW.GladiatorPath.Desc",
-                "You focus on combat maneuvers and arena fighting. You gain a permanent +2 competence bonus to CMB (trance) and can expend psionic focus for an additional +4 to CMB (maneuver)."))
+                "You dominate the arena with combat maneuvers and brute force.\n" +
+                "\n" +
+                "Trance (3rd level): while focused, gain a +2 competence bonus to CMB, increasing by +1 every four levels (+3 at 7th, +4 at 11th, +5 at 15th, +6 at 19th).\n" +
+                "\n" +
+                "Maneuver: expend psionic focus (swift action) for +4 competence to CMB for 1 round (trip, disarm, and other maneuvers).\n" +
+                "\n" +
+                "Expanded Maneuver: expend psionic focus to steel your resolve â€” +4 competence to all saving throws for 1 round.\n" +
+                "\n" +
+                "A second path can be chosen at 9th level."))
             .SetIcon(icon)
             .SetIsClassFeature()
             .AddFeatureOnClassLevel(feature: trance.ToString(), level: 3, clazz: Guids.PsychicWarriorClass)

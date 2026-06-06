@@ -25,7 +25,7 @@ public static class PsychicStrike
         var chargeBuff = BuffConfigurator.New("SKPsychicStrikeChargeBuff", Guids.PsychicStrikeChargeBuff)
             .SetDisplayName(Loc.Str("SK.PsychicStrike.Charge.Name", "Psychic Strike"))
             .SetDescription(Loc.Str("SK.PsychicStrike.Charge.Desc",
-                "Your mind blade is imbued with destructive psychic energy. The next time this weapon hits a target, it deals bonus damage (1d8 per 4 soulknife levels). This charge is retained until used — it is not lost on a miss."))
+                "Your mind blade is imbued with destructive psychic energy. The next time this weapon hits a target, it deals bonus force damage (1d8 per 4 soulknife levels). This charge is retained until used — it is not lost on a miss."))
             .SetIcon(icon)
             .Configure();
 
@@ -33,7 +33,7 @@ public static class PsychicStrike
         AbilityConfigurator.New("SKPsychicStrikeChargeAbility", Guids.PsychicStrikeChargeAbility)
             .SetDisplayName(Loc.Str("SK.PsychicStrike.Charge.AbName", "Psychic Strike"))
             .SetDescription(Loc.Str("SK.PsychicStrike.Charge.AbDesc",
-                "Move Action. Imbue your mind blade with psychic energy. Your next hit deals bonus damage (1d8 at 3rd level, +1d8 per 4 levels). The charge persists until a hit lands."))
+                "Move Action. Imbue your mind blade with psychic energy. Your next hit deals bonus force damage (1d8 at 3rd level, +1d8 per 4 levels). The charge persists until a hit lands."))
             .SetIcon(icon)
             .SetType(AbilityType.Extraordinary)
             .SetRange(AbilityRange.Personal)
@@ -64,7 +64,7 @@ public static class PsychicStrike
         FeatureConfigurator.New("SKPsychicStrikeFeature", Guids.PsychicStrikeFeature)
             .SetDisplayName(Loc.Str("SK.PsychicStrike.Name", "Psychic Strike"))
             .SetDescription(Loc.Str("SK.PsychicStrike.Desc",
-                "As a move action, a soulknife of 3rd level or higher can imbue her mind blade with destructive psychic energy. This attack deals an extra 1d8 points of damage. The charge persists until the next successful hit — it is not lost on a miss. At 7th level and every four levels thereafter, the extra damage increases by 1d8. A soulknife can also recharge a spent strike as a swift action by expending psionic focus."))
+                "As a move action, a soulknife of 3rd level or higher can imbue her mind blade with destructive psychic energy. This attack deals an extra 1d8 points of force damage. The charge persists until the next successful hit — it is not lost on a miss. At 7th level and every four levels thereafter, the extra damage increases by 1d8. A soulknife can also recharge a spent strike as a swift action by expending psionic focus."))
             .SetIcon(icon)
             .SetIsClassFeature()
             .AddFacts([Guids.PsychicStrikeChargeAbility, Guids.PsychicStrikeRechargeAbility])

@@ -58,7 +58,8 @@ public class PsychicStrikeDamage : UnitFactComponentDelegate,
 
         buff.Remove();
 
-        var raw = WeaponInheritedDamage.Build(evt.Weapon, new DiceFormula(numDice, DiceType.D8), alignmentBypassAll: false);
+        // Force damage (matches Psionic Weapon): fits the psychic theme and bypasses physical DR.
+        var raw = new EnergyDamage(new DiceFormula(numDice, DiceType.D8), DamageEnergyType.Magic);
         var damageRule = Rulebook.Trigger(new RuleDealDamage(evt.Initiator, evt.Target, new DamageBundle(raw))
         {
             Reason = new RuleReason(Fact),
