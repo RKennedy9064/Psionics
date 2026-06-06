@@ -106,7 +106,15 @@ public static class DervishPath
         FeatureConfigurator.New("DervishPath", Guids.DervishPath)
             .SetDisplayName(Loc.Str("PW.DervishPath.Name", "Dervish Path"))
             .SetDescription(Loc.Str("PW.DervishPath.Desc",
-                "You focus on swift dual-weapon mastery. You gain a +1 competence bonus to attack rolls (trance) and can expend psionic focus to enter a whirling combat stance (maneuver)."))
+                "You focus on swift dual-weapon mastery.\n" +
+                "\n" +
+                "Trance (3rd level): while wielding two weapons and focused, gain a +1 competence bonus to attack rolls, increasing by +1 every four levels (+2 at 7th, +3 at 11th, +4 at 15th, +5 at 19th).\n" +
+                "\n" +
+                "Maneuver: expend psionic focus (swift action) for a whirling stance — +2 competence to attack and damage for 1 round.\n" +
+                "\n" +
+                "Expanded Maneuver (Whirlwind Dance): expend psionic focus to gain the benefits of haste for 1 round (extra attack on a full attack, +1 dodge AC, +1 Reflex, +30 ft speed).\n" +
+                "\n" +
+                "A second path can be chosen at 9th level."))
             .SetIcon(icon)
             .SetIsClassFeature()
             .AddFeatureOnClassLevel(feature: trance.ToString(), level: 3, clazz: Guids.PsychicWarriorClass)

@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.2.1] - Unreleased
+
+### Changed
+- Psychic Strike (and Exploding Critical) now deal force damage instead of physical, bypassing damage reduction and better fitting the psychic theme
+- Psychic Warrior path selection now shows a full breakdown of what each path grants (trance with its scaling, maneuver, and expanded maneuver) instead of a one-line summary
+
+### Fixed
+- Psychic Warrior trance bonus now begins at +1 when the trance unlocks at 3rd level (previously it was +0 until 6th level due to an off-by-one in the scaling), correctly reaching +5 (or +6 for Assassin/Gladiator) by 19th
+
 ## [0.2.0] - 2026-06-01
 
 ### Added

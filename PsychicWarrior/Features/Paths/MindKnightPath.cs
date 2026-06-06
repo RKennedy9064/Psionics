@@ -40,7 +40,7 @@ public static class MindKnightPath
             addBuffComponents: b =>
             {
                 b.AddContextRankConfig(ContextRankConfigs.CasterLevel()
-                    .WithCustomProgression((2, 0), (6, 1), (10, 2), (14, 3), (18, 4), (20, 5)));
+                    .WithCustomProgression((3, 1), (7, 2), (11, 3), (15, 4), (19, 5)));
                 b.AddContextStatBonus(stat: StatType.Initiative, descriptor: ModifierDescriptor.Competence, value: ContextValues.Rank());
                 b.AddComponent(new MindKnightTranceAttackBonus());
             });
@@ -70,7 +70,7 @@ public static class MindKnightPath
                     .ApplyBuff(maneuverBuff, ContextDuration.Fixed(1)))
             .Configure();
 
-        // Expanded — Mental Strike: +4 Initiative + +4 dodge AC for 1 round (combat awareness)
+        // Expanded ï¿½ Mental Strike: +4 Initiative + +4 dodge AC for 1 round (combat awareness)
         var expandedBuff = BuffConfigurator.New("MindKnightExpandedManeuverBuff", Guids.MindKnightExpandedBuff)
             .SetDisplayName(Loc.Str("PW.MindKnightExpanded.BuffName", "Mental Strike"))
             .SetDescription(Loc.Str("PW.MindKnightExpanded.BuffDesc",
@@ -126,7 +126,15 @@ public static class MindKnightPath
         var pathConf = FeatureSelectionConfigurator.New("MindKnightPath", Guids.MindKnightPath)
             .SetDisplayName(Loc.Str("PW.MindKnightPath.Name", "Mind Knight Path"))
             .SetDescription(Loc.Str("PW.MindKnightPath.Desc",
-                "You focus on mental precision in combat. You gain +1 competence to Initiative and attack rolls with your called weapon (trance) and can expend psionic focus for +2 competence to attack and damage (maneuver). Choose your first called weapon from the list below; only weapons you are proficient with appear. You gain a new choice at 3rd, 7th, 11th, 15th, and 19th level."))
+                "You sharpen your mind's connection to a called weapon.\n" +
+                "\n" +
+                "Trance (3rd level): while focused, gain a +1 competence bonus to Initiative (always) and to attack rolls with your currently called weapon, increasing by +1 every four levels (+2 at 7th, +3 at 11th, +4 at 15th, +5 at 19th).\n" +
+                "\n" +
+                "Maneuver: expend psionic focus (swift action) for +2 competence to attack and damage for 1 round.\n" +
+                "\n" +
+                "Expanded Maneuver: expend psionic focus to sharpen combat awareness â€” +4 insight Initiative and +4 dodge AC for 1 round.\n" +
+                "\n" +
+                "Choose your first called weapon below (only weapons you are proficient with appear); you gain a new choice at 3rd, 7th, 11th, 15th, and 19th level. A second path can be chosen at 9th level."))
             .SetIcon(tranceIcon)
             .SetIsClassFeature()
             .SetIgnorePrerequisites(false)

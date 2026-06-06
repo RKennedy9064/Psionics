@@ -38,7 +38,7 @@ public static class AssassinsPath
             addBuffComponents: b =>
             {
                 b.AddContextRankConfig(ContextRankConfigs.CasterLevel()
-                    .WithCustomProgression((2, 0), (6, 2), (10, 3), (14, 4), (18, 5), (20, 6)));
+                    .WithCustomProgression((3, 2), (7, 3), (11, 4), (15, 5), (19, 6)));
                 b.AddContextStatBonus(
                     stat: StatType.AdditionalDamage,
                     descriptor: ModifierDescriptor.Competence,
@@ -71,7 +71,7 @@ public static class AssassinsPath
                     .ApplyBuff(maneuverBuff, ContextDuration.Fixed(1)))
             .Configure();
 
-        // Expanded � Mindblade Strike: +4 saves and +4 competence damage for 1 round (mind-over-body focus)
+        // Expanded � Mindblade Strike: +4 saves and +4 competence damage for 1 round (mind-over-body focus)
         var expandedBuff = BuffConfigurator.New("AssassinsExpandedManeuverBuff", Guids.AssassinsExpandedBuff)
             .SetDisplayName(Loc.Str("PW.AssassinsExpanded.BuffName", "Mindblade Strike"))
             .SetDescription(Loc.Str("PW.AssassinsExpanded.BuffDesc",
@@ -113,8 +113,15 @@ public static class AssassinsPath
         FeatureConfigurator.New("AssassinsPath", Guids.AssassinsPath)
             .SetDisplayName(Loc.Str("PW.AssassinsPath.Name", "Assassin's Path"))
             .SetDescription(Loc.Str("PW.AssassinsPath.Desc",
-                "You focus on dealing deadly precision damage. You gain a permanent +2 competence bonus to damage rolls (trance) " +
-                "and can expend psionic focus for +7 bonus damage on your next strike (maneuver)."))
+                "You strike with deadly, psionically-guided precision.\n" +
+                "\n" +
+                "Trance (3rd level): while focused, gain a +2 competence bonus to damage rolls, increasing by +1 every four levels (+3 at 7th, +4 at 11th, +5 at 15th, +6 at 19th).\n" +
+                "\n" +
+                "Maneuver: expend psionic focus (swift action) to channel precision into your next strike — +7 bonus damage.\n" +
+                "\n" +
+                "Expanded Maneuver (Mindblade Strike): expend psionic focus for pure mental focus — +4 competence damage and +4 competence to all saves for 1 round.\n" +
+                "\n" +
+                "A second path can be chosen at 9th level."))
             .SetIcon(icon)
             .SetIsClassFeature()
             .AddFeatureOnClassLevel(feature: trance.ToString(), level: 3, clazz: Guids.PsychicWarriorClass)

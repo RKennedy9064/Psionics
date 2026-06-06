@@ -39,7 +39,7 @@ public static class AsceticPath
             addBuffComponents: b =>
             {
                 b.AddContextRankConfig(ContextRankConfigs.CasterLevel()
-                    .WithCustomProgression((2, 0), (6, 1), (10, 2), (14, 3), (18, 4), (20, 5)));
+                    .WithCustomProgression((3, 1), (7, 2), (11, 3), (15, 4), (19, 5)));
                 b.AddContextStatBonus(
                     stat: StatType.AC,
                     descriptor: ModifierDescriptor.Competence,
@@ -110,7 +110,15 @@ public static class AsceticPath
         FeatureConfigurator.New("AsceticPath", Guids.AsceticPath)
             .SetDisplayName(Loc.Str("PW.AsceticPath.Name", "Ascetic Path"))
             .SetDescription(Loc.Str("PW.AsceticPath.Desc",
-                "You focus on psionic body mastery. You gain a +1 competence bonus to AC (trance) and can expend psionic focus to adopt a defensive stance (maneuver)."))
+                "You focus on psionic body mastery and disciplined defense.\n" +
+                "\n" +
+                "Trance (3rd level): while focused, gain a +1 competence bonus to AC, increasing by +1 every four levels (+2 at 7th, +3 at 11th, +4 at 15th, +5 at 19th).\n" +
+                "\n" +
+                "Maneuver: expend psionic focus (swift action) to enter a defensive stance — +4 dodge AC for 1 round.\n" +
+                "\n" +
+                "Expanded Maneuver (Wholeness of Body): expend psionic focus to heal yourself for hit points equal to your manifester level.\n" +
+                "\n" +
+                "A second path can be chosen at 9th level."))
             .SetIcon(icon)
             .SetIsClassFeature()
             .AddFeatureOnClassLevel(feature: trance.ToString(), level: 3, clazz: Guids.PsychicWarriorClass)
