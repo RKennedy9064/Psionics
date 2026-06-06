@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.2.1] - Unreleased
+## [0.2.1] - 2026-06-06
 
 ### Changed
 - Psychic Strike (and Exploding Critical) now deal force damage instead of physical, bypassing damage reduction and better fitting the psychic theme
