@@ -2,7 +2,7 @@
   "Id": "PsychicWarrior",
   "DisplayName": "Psionics",
   "Author": "rkennedy9064",
-  "Version": "0.2.1",
+  "Version": "0.2.2",
   "ManagerVersion": "0.24.0",
   "AssemblyName": "Psionics.dll",
   "EntryMethod": "Psionics.Main.Load"
