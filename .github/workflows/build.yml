@@ -42,7 +42,9 @@ jobs:
           Write-Host "Releasing version: $version"
           $out = "bin\Release\net472"
           $zip = "Psionics-$version.zip"
-          Compress-Archive -Path "$out\Psionics.dll", "$out\BlueprintCore.dll", "$out\Info.json" `
+          # BlueprintCore is merged into Psionics.dll; do NOT ship it standalone or it
+          # reintroduces the load-order version conflict on users' machines.
+          Compress-Archive -Path "$out\Psionics.dll", "$out\Info.json" `
             -DestinationPath $zip
           gh release delete "v$version" --yes --cleanup-tag --repo ${{ github.repository }} 2>$null
           gh release create "v$version" $zip `
