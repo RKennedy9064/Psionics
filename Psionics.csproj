@@ -24,6 +24,14 @@
 		<Reference Include="UnityModManager">
 			<HintPath>$(WrathPath)\Wrath_Data\Managed\UnityModManager.dll</HintPath>
 		</Reference>
+
+		<!-- Transitive dep of BlueprintCore. Copied local only so ILRepack can resolve
+		     it while reading BlueprintCore; the game provides it at runtime, so it is
+		     NOT merged and NOT shipped. -->
+		<Reference Include="Newtonsoft.Json">
+			<HintPath>$(WrathPath)\Wrath_Data\Managed\Newtonsoft.Json.dll</HintPath>
+			<Private>true</Private>
+		</Reference>
 	</ItemGroup>
 
 	<!-- 1. Tell Krafs to publicize Assembly-CSharp -->
@@ -35,6 +43,9 @@
 	<ItemGroup>
 		<PackageReference Include="WW-Blueprint-Core" Version="2.8.6" />
 		<PackageReference Include="Krafs.Publicizer" Version="2.2.1" />
+		<!-- Build-time only: provides ILRepack.exe used by the ILRepackMerge target to
+		     merge BlueprintCore into Psionics.dll. PrivateAssets="all" so it never ships. -->
+		<PackageReference Include="ILRepack" Version="2.0.18" GeneratePathProperty="true" PrivateAssets="all" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -43,15 +54,43 @@
 		</None>
 	</ItemGroup>
 
+	<!-- Merge BlueprintCore privately into Psionics.dll so another mod's older
+	     BlueprintCore.dll can't win the single assembly-name slot at load time
+	     (the cause of the MissingMethodException cascade). Internalize="true"
+	     makes the merged BlueprintCore types internal to Psionics.dll.
+	     Runs after the DLL is built and before PostBuild copies it. -->
+	<Target Name="ILRepackMerge" AfterTargets="Build" BeforeTargets="PostBuild">
+		<PropertyGroup>
+			<!-- bin output dir without trailing slash (a trailing '\' before a quote would
+			     escape the quote on the command line). Holds the copy-local game assemblies
+			     including Newtonsoft.Json 8.0.0.0. -->
+			<_BinDir>$([System.IO.Path]::GetDirectoryName($(TargetPath)))</_BinDir>
+			<_MergedDll>$(TargetDir)$(TargetName).merged.dll</_MergedDll>
+		</PropertyGroup>
+		<!-- Primary assembly first, then BlueprintCore. /internalize hides the merged
+		     BlueprintCore types so nothing else can bind to them. Output to a temp file,
+		     then overwrite the real DLL (ILRepack can't write over its own input). -->
+		<Exec Command="&quot;$(PkgILRepack)\tools\ILRepack.exe&quot; /internalize /lib:&quot;$(_BinDir)&quot; /lib:&quot;$(WrathPath)\Wrath_Data\Managed&quot; /out:&quot;$(_MergedDll)&quot; &quot;$(TargetPath)&quot; &quot;$(TargetDir)BlueprintCore.dll&quot;" />
+		<Copy SourceFiles="$(_MergedDll)" DestinationFiles="$(TargetPath)" OverwriteReadOnlyFiles="true" />
+		<Delete Files="$(_MergedDll)" />
+	</Target>
+
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
 
 		<MakeDir Directories="$(WrathPath)\Mods\PsychicWarrior" />
 
+		<!-- Remove leftovers from older builds: the standalone BlueprintCore.dll (now merged
+		     in) and stale UMM assembly caches, so the game can't load an old copy. -->
+		<Delete Files="$(WrathPath)\Mods\PsychicWarrior\BlueprintCore.dll" />
+		<ItemGroup>
+			<_StaleCache Include="$(WrathPath)\Mods\PsychicWarrior\*.cache" />
+		</ItemGroup>
+		<Delete Files="@(_StaleCache)" />
+
+		<!-- BlueprintCore is now merged inside this DLL; no separate copy needed. -->
 		<Copy SourceFiles="$(TargetDir)$(AssemblyName).dll" DestinationFolder="$(WrathPath)\Mods\PsychicWarrior" />
 
 		<Copy SourceFiles="$(TargetDir)Info.json" DestinationFolder="$(WrathPath)\Mods\PsychicWarrior" />
-
-		<Copy SourceFiles="$(TargetDir)BlueprintCore.dll" DestinationFolder="$(WrathPath)\Mods\PsychicWarrior" />
 
 	</Target>
 
