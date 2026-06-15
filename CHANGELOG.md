@@ -1,10 +1,6 @@
 # Changelog
 
-## [0.2.2] - Unreleased
-
-### Added
-
-### Changed
+## [0.2.2] - 2026-06-14
 
 ### Fixed
 - Fixed the mod failing to initialize when other installed mods load an older version of BlueprintCore first. Previously this caused both classes to appear in the class list but be unselectable/unbuildable (none of the powers, paths, blade skills, or other features would configure). BlueprintCore is now merged directly into the mod assembly, so the mod always uses its own correct version regardless of load order or what other mods ship.
