@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.2.3] - Unreleased
+## [0.2.3] - 2026-06-27
 
 ### Fixed
 - Fixed mind blades being shared between soulknives in the same party. Two soulknives with the same weapon form (e.g. both two-handed) would both display and use whichever weapon was summoned last, because every form shared a single weapon definition that was rewritten each time a blade was manifested. Each chosen weapon now has its own dedicated definition, so every soulknife's mind blade keeps its own appearance, reach, and behavior.
