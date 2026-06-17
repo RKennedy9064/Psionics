@@ -129,6 +129,7 @@ public static class BladeSkillsSelection
                 "You use your Dexterity modifier instead of your Strength modifier on attack rolls with your mind blade, in any form (including two-handed)."))
             .SetIcon(FeatureRefs.WeaponFinesse.Reference.Get().Icon)
             .SetIsClassFeature()
+            .AddComponent(new MindBladeFinesseComponent())
             .Configure();
 
         var weaponSpecial = FeatureConfigurator.New("SKWeaponSpecialTrip", Guids.BladeSkillWeaponSpecial)

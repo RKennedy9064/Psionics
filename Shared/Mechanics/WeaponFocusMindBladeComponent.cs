@@ -16,17 +16,9 @@ public class WeaponFocusMindBladeComponent : UnitFactComponentDelegate,
 {
     public void OnEventAboutToTrigger(RuleCalculateAttackBonusWithoutTarget evt)
     {
-        if (evt.Weapon == null) return;
-
-        foreach (var buff in Owner.Descriptor.Buffs.Enumerable)
-        {
-            var mbComp = buff.Blueprint.ComponentsArray.OfType<MindBladeComponent>().FirstOrDefault();
-            if (mbComp?.WeaponRef?.Get() == evt.Weapon.Blueprint)
-            {
-                evt.AddModifier(1, Fact, ModifierDescriptor.None);
-                return;
-            }
-        }
+        if (evt.Weapon?.Blueprint == null) return;
+        if (MindBladeRegistry.IsMindBlade(evt.Weapon.Blueprint))
+            evt.AddModifier(1, Fact, ModifierDescriptor.None);
     }
 
     public void OnEventDidTrigger(RuleCalculateAttackBonusWithoutTarget evt) { }

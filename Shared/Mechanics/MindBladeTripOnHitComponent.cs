@@ -37,14 +37,6 @@ public class MindBladeTripOnHitComponent : UnitFactComponentDelegate,
         Rulebook.Trigger(maneuver);
     }
 
-    private bool IsMindBlade(ItemEntityWeapon weapon)
-    {
-        if (weapon == null) return false;
-        foreach (var buff in Owner.Descriptor.Buffs.Enumerable)
-        {
-            var mb = buff.Blueprint.ComponentsArray.OfType<MindBladeComponent>().FirstOrDefault();
-            if (mb?.WeaponRef?.Get() == weapon.Blueprint) return true;
-        }
-        return false;
-    }
+    private bool IsMindBlade(ItemEntityWeapon weapon) =>
+        weapon?.Blueprint != null && MindBladeRegistry.IsMindBlade(weapon.Blueprint);
 }

@@ -164,19 +164,11 @@ public static class MindBladeEnchantments
         _ => null,
     };
 
-    private static readonly string[] MindBladeWeaponGuids =
-    [
-        Guids.MindBladeLightWeapon, Guids.MindBladeOneHandedWeapon,
-        Guids.MindBladeTwoHandedWeapon, Guids.MindBladeDoublePrimaryWeapon,
-    ];
-
     private static ItemEntityWeapon FindMindBlade(UnitEntityData owner)
     {
         var slot = owner.Descriptor.Body?.PrimaryHand;
         if (slot == null || !slot.HasItem) return null;
         if (slot.Item is not ItemEntityWeapon weapon || weapon.Blueprint == null) return null;
-        foreach (var guid in MindBladeWeaponGuids)
-            if (weapon.Blueprint == BlueprintTool.Get<BlueprintItemWeapon>(guid)) return weapon;
-        return null;
+        return MindBladeRegistry.IsMindBlade(weapon.Blueprint) ? weapon : null;
     }
 }

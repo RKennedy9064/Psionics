@@ -44,22 +44,36 @@ public static class MindBlade
     {
         var icon = AbilityRefs.MagicWeapon.Reference.Get().Icon;
 
-        // Create the three fixed weapon type + item blueprints
+        // Legacy fixed-form blueprints. No longer equipped (each chosen weapon gets its own
+        // dedicated immutable blueprint below), but kept defined + registered so a save that has an
+        // old-style mind blade equipped still resolves and is recognized until the buff re-equips.
         CreateWeaponBlueprints();
+        foreach (var g in new[]
+                 {
+                     Guids.MindBladeLightWeapon, Guids.MindBladeOneHandedWeapon,
+                     Guids.MindBladeTwoHandedWeapon, Guids.MindBladeDoublePrimaryWeapon,
+                     Guids.MindBladeDoubleOffhandWeapon,
+                 })
+            MindBladeRegistry.Register(BlueprintTool.Get<BlueprintItemWeapon>(g));
 
-        // Form toggles (buff + activatable), one per handedness
-        var (_, lightToggle) = CreateFormToggle("Light",     Guids.MindBladeLightBuff,      Guids.MindBladeLightToggle,
-                                   Guids.MindBladeLightWeapon,     WeaponCategory.Shortsword, icon);
-        var (_, oneToggle)   = CreateFormToggle("OneHanded", Guids.MindBladeOneHandedBuff,   Guids.MindBladeOneHandedToggle,
-                                   Guids.MindBladeOneHandedWeapon, WeaponCategory.Longsword,  icon);
-        var (_, twoToggle)   = CreateFormToggle("TwoHanded", Guids.MindBladeTwoHandedBuff,   Guids.MindBladeTwoHandedToggle,
-                                   Guids.MindBladeTwoHandedWeapon, WeaponCategory.Greatsword, icon);
-        var (_, doubleToggle) = CreateFormToggle("Double",   Guids.MindBladeDoubleBuff,      Guids.MindBladeDoubleToggle,
-                                   Guids.MindBladeDoublePrimaryWeapon, WeaponCategory.DoubleSword, icon);
+        // Legacy form toggles (one per handedness), kept defined + registered for save compatibility
+        // with characters created before per-weapon toggles existed. New picks below grant their own
+        // per-category toggle carrying the chosen weapon's icon and name.
+        CreateFormToggle("Light",     Guids.MindBladeLightBuff,     Guids.MindBladeLightToggle,     icon);
+        CreateFormToggle("OneHanded", Guids.MindBladeOneHandedBuff, Guids.MindBladeOneHandedToggle, icon);
+        CreateFormToggle("TwoHanded", Guids.MindBladeTwoHandedBuff, Guids.MindBladeTwoHandedToggle, icon);
+        CreateFormToggle("Double",    Guids.MindBladeDoubleBuff,    Guids.MindBladeDoubleToggle,    icon);
 
-        // Single combined selection: every non-shield weapon. The form (and thus damage/crit)
-        // is derived automatically from each weapon's own handedness, so a dagger summons a
-        // 1d6 light blade, a longsword a 1d8 one-handed blade, a greatsword a 2d6 two-handed blade.
+        // Crit-normalizing references (every mind blade form is 19-20/×2 regardless of the weapon
+        // it emulates), taken from the standard weapon of each form.
+        var lightNorm  = ItemWeaponRefs.StandardShortsword.Reference.Get()?.m_Type?.Get();
+        var oneNorm    = ItemWeaponRefs.StandardLongsword.Reference.Get()?.m_Type?.Get();
+        var twoNorm    = ItemWeaponRefs.StandardGreatsword.Reference.Get()?.m_Type?.Get();
+        var doubleNorm = ItemWeaponRefs.StandardDoubleSword.Reference.Get()?.m_Type?.Get();
+
+        // Single combined selection: every non-shield weapon. The form (and thus damage/crit) is
+        // derived from each weapon's own handedness; a dagger summons a 1d6 light blade, a longsword
+        // a 1d8 one-handed blade, a greatsword a 2d6 two-handed blade.
         var conf = FeatureSelectionConfigurator.New("SKMindBladeFormSelection", Guids.MindBladeFeature)
             .SetDisplayName(Loc.Str("SK.MB.Selection.Name", "Form Mind Blade"))
             .SetDescription(Loc.Str("SK.MB.Selection.Desc",
@@ -81,47 +95,157 @@ public static class MindBlade
                 var wtype = srcWeapon?.m_Type?.Get();
                 if (wtype == null) continue;
 
-                // Map handedness → form toggle + custom weapon type + damage label.
+                // Map handedness → form toggle + normalized damage/crit reference.
                 // Double weapons (two ends) are detected first; they become a double mind blade.
                 // NOTE: classify light by m_IsLight, NOT one-handed by m_IsOneHanded. In WotR's vanilla
                 // weapon blueprints m_IsOneHanded is left false on nearly every weapon (only the Rapier
-                // sets it), and m_IsLight is what actually distinguishes light from one-handed. So we
-                // detect light explicitly and treat everything else (non-light, non-two-handed) as
-                // one-handed — otherwise longswords, scimitars, etc. wrongly fell through to light (1d6).
-                string toggleGuid, typeGuid, formLabel;
+                // sets it), and m_IsLight is what actually distinguishes light from one-handed.
+                string formLabel;
+                DiceFormula formDice;
+                BlueprintWeaponType norm;
+                bool isDouble = false;
                 if (srcWeapon.Double)
                 {
-                    toggleGuid = doubleToggle.AssetGuid.ToString();
-                    typeGuid   = Guids.MindBladeDoubleWeaponType;
+                    formDice   = new DiceFormula(1, DiceType.D8);
+                    norm       = doubleNorm;
                     formLabel  = "double (1d8/1d8)";
+                    isDouble   = true;
                 }
                 else if (wtype.m_IsTwoHanded)
                 {
-                    toggleGuid = twoToggle.AssetGuid.ToString();
-                    typeGuid   = Guids.MindBladeTwoHandedWeaponType;
+                    formDice   = new DiceFormula(2, DiceType.D6);
+                    norm       = twoNorm;
                     formLabel  = "two-handed (2d6)";
                 }
                 else if (wtype.m_IsLight)
                 {
-                    toggleGuid = lightToggle.AssetGuid.ToString();
-                    typeGuid   = Guids.MindBladeLightWeaponType;
+                    formDice   = new DiceFormula(1, DiceType.D6);
+                    norm       = lightNorm;
                     formLabel  = "light (1d6)";
                 }
                 else
                 {
-                    toggleGuid = oneToggle.AssetGuid.ToString();
-                    typeGuid   = Guids.MindBladeOneHandedWeaponType;
+                    formDice   = new DiceFormula(1, DiceType.D8);
+                    norm       = oneNorm;
                     formLabel  = "one-handed (1d8)";
                 }
 
-                conf = conf.AddToAllFeatures(MakeWeaponEntry(cat, weaponRef, toggleGuid, typeGuid, formLabel, icon));
+                // Each chosen weapon gets its own dedicated, immutable type + item blueprint with the
+                // chosen weapon's look/reach/group baked in and the form's normalized damage/crit.
+                var itemRef = BuildPerCategory(cat, srcWeapon, formDice, norm, isDouble);
+
+                // Per-character form toggle: its own buff + activatable carrying the chosen weapon's
+                // icon and name, so the action bar button and tooltip show exactly what was picked.
+                var name       = FormatName(cat);
+                var togIcon    = srcWeapon.Icon ?? icon;
+                var toggleGuid = CreatePerCategoryToggle(cat.ToString(), name, formLabel, togIcon);
+
+                conf = conf.AddToAllFeatures(MakeWeaponEntry(cat, toggleGuid, itemRef, formLabel, togIcon));
             }
         }
 
         conf.Configure();
     }
 
-    // ── Blueprint creation ─────────────────────────────────────────────────────
+    // ── Per-category blueprint creation ─────────────────────────────────────────
+    // Builds the dedicated weapon type + item for one chosen weapon category and registers them.
+    // Returns the primary item reference the feature points at.
+    private static BlueprintItemWeaponReference BuildPerCategory(
+        WeaponCategory cat, BlueprintItemWeapon src, DiceFormula formDice,
+        BlueprintWeaponType norm, bool isDouble)
+    {
+        var catStr   = cat.ToString();
+        var typeGuid = DeterministicGuid($"SK.MB.Type.{catStr}");
+        var itemGuid = DeterministicGuid($"SK.MB.Item.{catStr}");
+
+        CreatePerCategoryType($"SKMBType_{catStr}", typeGuid, cat, src, formDice, norm);
+
+        if (isDouble)
+        {
+            var offGuid = DeterministicGuid($"SK.MB.Offhand.{catStr}");
+            CreatePerCategoryItem($"SKMBOff_{catStr}", offGuid, typeGuid, src, makeDouble: false, secondRef: null);
+            var offRef = BlueprintTool.GetRef<BlueprintItemWeaponReference>(offGuid);
+            CreatePerCategoryItem($"SKMBItem_{catStr}", itemGuid, typeGuid, src, makeDouble: true, secondRef: offRef);
+            MindBladeRegistry.Register(BlueprintTool.Get<BlueprintItemWeapon>(offGuid));
+        }
+        else
+        {
+            CreatePerCategoryItem($"SKMBItem_{catStr}", itemGuid, typeGuid, src, makeDouble: false, secondRef: null);
+        }
+
+        MindBladeRegistry.Register(BlueprintTool.Get<BlueprintItemWeapon>(itemGuid));
+        return BlueprintTool.GetRef<BlueprintItemWeaponReference>(itemGuid);
+    }
+
+    // A per-category weapon type: chosen weapon's mechanics + look, the form's normalized damage,
+    // and 19-20/×2 critical (from the form's standard reference, not the chosen weapon).
+    private static void CreatePerCategoryType(
+        string name, string guid, WeaponCategory cat, BlueprintItemWeapon src,
+        DiceFormula formDice, BlueprintWeaponType norm)
+    {
+        var srcType = src?.m_Type?.Get();
+
+        WeaponTypeConfigurator.New(name, guid)
+            .SetCategory(cat)
+            .SetBaseDamage(formDice)
+            .OnConfigure(bp =>
+            {
+                if (srcType != null)
+                {
+                    bp.m_DamageType              = srcType.m_DamageType;
+                    bp.m_AttackType              = srcType.m_AttackType;
+                    bp.m_AttackRange            = srcType.m_AttackRange;   // reach / range
+                    bp.m_FighterGroupFlags      = srcType.m_FighterGroupFlags;
+                    bp.m_IsTwoHanded            = srcType.m_IsTwoHanded;
+                    bp.m_IsOneHanded            = srcType.m_IsOneHanded;
+                    bp.m_IsLight                = srcType.m_IsLight;
+                    bp.m_IsMonk                 = srcType.m_IsMonk;
+                    bp.m_IsNatural              = srcType.m_IsNatural;
+                    bp.m_IsUnarmed              = srcType.m_IsUnarmed;
+                    bp.m_OverrideAttackBonusStat = srcType.m_OverrideAttackBonusStat;
+                    bp.m_AttackBonusStatOverride = srcType.m_AttackBonusStatOverride;
+                    bp.m_Weight                 = srcType.m_Weight;
+                    bp.m_VisualParameters       = srcType.m_VisualParameters;
+                    bp.m_Icon                   = srcType.m_Icon;
+                    bp.m_TypeNameText           = srcType.m_TypeNameText;
+                    bp.m_DefaultNameText        = srcType.m_DefaultNameText;
+                    bp.m_DescriptionText        = srcType.m_DescriptionText;
+                }
+                // Normalize critical to the form's 19-20/×2 regardless of the emulated weapon.
+                if (norm != null)
+                {
+                    bp.m_CriticalRollEdge = norm.m_CriticalRollEdge;
+                    bp.m_CriticalModifier = norm.m_CriticalModifier;
+                }
+            })
+            .Configure();
+    }
+
+    private static void CreatePerCategoryItem(
+        string name, string guid, string weaponTypeGuid, BlueprintItemWeapon src,
+        bool makeDouble, BlueprintItemWeaponReference secondRef)
+    {
+        ItemWeaponConfigurator.New(name, guid)
+            .SetType(BlueprintTool.GetRef<BlueprintWeaponTypeReference>(weaponTypeGuid))
+            .SetSize(Size.Medium)
+            .OnConfigure(bp =>
+            {
+                bp.m_OverrideDamageDice = false;
+                // Item-level fields drive the equipped 3D model, name, and inventory icon.
+                bp.m_VisualParameters = src.m_VisualParameters;
+                bp.m_DisplayNameText  = src.m_DisplayNameText;
+                if (src.Icon != null) bp.m_Icon = src.Icon;
+                if (makeDouble)
+                {
+                    bp.Double         = true;
+                    bp.CountAsDouble  = true;
+                    bp.m_SecondWeapon = secondRef;
+                }
+            })
+            .Configure();
+    }
+
+    // ── Legacy blueprint creation (kept for save compatibility) ─────────────────
     private static void CreateWeaponBlueprints()
     {
         CreateWeaponTypeBP("SKMindBladeLightType",     Guids.MindBladeLightWeaponType,
@@ -146,9 +270,6 @@ public static class MindBlade
         CreateDoubleWeaponBlueprints();
     }
 
-    // Double mind blade: a two-ended weapon. Each end deals one-handed form damage (1d8, 19-20/×2).
-    // The primary item carries Double=true and links the off-hand half via m_SecondWeapon, so the
-    // engine grants main- and off-hand attacks exactly like a real two-bladed sword.
     private static void CreateDoubleWeaponBlueprints()
     {
         var doubleSword = ItemWeaponRefs.StandardDoubleSword.Reference.Get();
@@ -156,7 +277,6 @@ public static class MindBlade
         CreateWeaponTypeBP("SKMindBladeDoubleType", Guids.MindBladeDoubleWeaponType,
             new DiceFormula(1, DiceType.D8), WeaponCategory.DoubleSword, doubleSword);
 
-        // Off-hand half first (the primary references it).
         CreateItemWeaponBP("SKMindBladeDoubleOffhand", Guids.MindBladeDoubleOffhandWeapon,
             Guids.MindBladeDoubleWeaponType, doubleSword);
 
@@ -175,10 +295,6 @@ public static class MindBlade
                 bp.m_VisualParameters = doubleSword.m_VisualParameters;
             })
             .Configure();
-
-        var made = BlueprintTool.Get<BlueprintItemWeapon>(Guids.MindBladeDoublePrimaryWeapon);
-        Log.Info($"[MB] ItemWeapon SKMindBladeDoublePrimary: double={made?.Double} second={made?.m_SecondWeapon?.deserializedGuid} " +
-                 $"computedBaseDamage={made?.BaseDamage}");
     }
 
     private static void CreateWeaponTypeBP(
@@ -193,9 +309,6 @@ public static class MindBlade
             .OnConfigure(bp =>
             {
                 if (sourceType == null) return;
-                // Clone every stat/display field from the reference weapon type so the synthetic
-                // type is fully initialized (a from-scratch type is missing m_DamageType etc.,
-                // which makes the inventory tooltip mis-compute damage as 1-1).
                 bp.m_DamageType            = sourceType.m_DamageType;
                 bp.m_CriticalRollEdge      = sourceType.m_CriticalRollEdge;
                 bp.m_CriticalModifier      = sourceType.m_CriticalModifier;
@@ -220,10 +333,6 @@ public static class MindBlade
                 bp.m_MagicDescriptionText  = sourceType.m_MagicDescriptionText;
             })
             .Configure();
-
-        var made = BlueprintTool.Get<BlueprintWeaponType>(guid);
-        Log.Info($"[MB] WeaponType {name}: baseDamage={made?.m_BaseDamage.Rolls}d{(int?)made?.m_BaseDamage.Dice} " +
-                 $"crit={made?.m_CriticalRollEdge} x{made?.m_CriticalModifier} 2h={made?.m_IsOneHanded == false}");
     }
 
     private static void CreateItemWeaponBP(string name, string guid, string weaponTypeGuid, BlueprintItemWeapon sourceItem)
@@ -235,31 +344,22 @@ public static class MindBlade
             {
                 bp.m_OverrideDamageDice = false;
                 if (sourceItem?.Icon != null) bp.m_Icon = sourceItem.Icon;
-                // Item-level visual drives the equipped 3D model; seed it from the reference weapon.
                 bp.m_VisualParameters = sourceItem.m_VisualParameters;
             })
             .Configure();
-
-        var made = BlueprintTool.Get<BlueprintItemWeapon>(guid);
-        Log.Info($"[MB] ItemWeapon {name}: size={made?.m_Size} icon={(made?.m_Icon != null)} " +
-                 $"computedBaseDamage={made?.BaseDamage}");
     }
 
     // ── Form toggle ────────────────────────────────────────────────────────────
     private static (Kingmaker.UnitLogic.Buffs.Blueprints.BlueprintBuff,
                     Kingmaker.UnitLogic.ActivatableAbilities.BlueprintActivatableAbility)
-        CreateFormToggle(string formKey, string buffGuid, string toggleGuid,
-                         string weaponGuid, WeaponCategory profCategory,
-                         UnityEngine.Sprite icon)
+        CreateFormToggle(string formKey, string buffGuid, string toggleGuid, UnityEngine.Sprite icon)
     {
-        var weaponRef = BlueprintTool.GetRef<BlueprintItemWeaponReference>(weaponGuid);
-
         var buff = BuffConfigurator.New($"SKMBBuff{formKey}", buffGuid)
             .SetDisplayName(Loc.Str($"SK.MB.{formKey}.BN", "Mind Blade"))
             .SetDescription(Loc.Str($"SK.MB.{formKey}.BD",
                 "Your mind blade is manifested. It is bound to your primary hand and cannot be unequipped while active."))
             .SetIcon(icon)
-            .AddComponent(new MindBladeComponent { Category = profCategory, WeaponRef = weaponRef })
+            .AddComponent(new MindBladeComponent())
             .Configure();
 
         var toggle = ActivatableAbilityConfigurator.New($"SKMBToggle{formKey}", toggleGuid)
@@ -278,12 +378,45 @@ public static class MindBlade
         return (buff, toggle);
     }
 
+    // Per-category form toggle: a dedicated buff + activatable for one chosen weapon, carrying that
+    // weapon's icon and name so the action bar and tooltip reflect the exact pick. Returns the toggle's
+    // GUID for the weapon entry to grant.
+    private static string CreatePerCategoryToggle(
+        string catStr, string weaponName, string formLabel, UnityEngine.Sprite icon)
+    {
+        var buffGuid   = DeterministicGuid($"SK.MB.Buff.{catStr}");
+        var toggleGuid = DeterministicGuid($"SK.MB.Toggle.{catStr}");
+
+        var buff = BuffConfigurator.New($"SKMBBuff_{catStr}", buffGuid)
+            .SetDisplayName(Loc.Str($"SK.MB.Buff.{catStr}.BN", "Mind Blade"))
+            .SetDescription(Loc.Str($"SK.MB.Buff.{catStr}.BD",
+                $"Your mind blade is manifested as a {weaponName.ToLower()}. It is bound to your primary " +
+                "hand and cannot be unequipped while active."))
+            .SetIcon(icon)
+            .AddComponent(new MindBladeComponent())
+            .Configure();
+
+        ActivatableAbilityConfigurator.New($"SKMBToggle_{catStr}", toggleGuid)
+            .SetDisplayName(Loc.Str($"SK.MB.Toggle.{catStr}.TN", "Form Mind Blade"))
+            .SetDescription(Loc.Str($"SK.MB.Toggle.{catStr}.TD",
+                $"Toggle. Manifest or dismiss your mind blade, which takes the form of a {weaponName.ToLower()} " +
+                $"({formLabel}). The blade cannot be unequipped while active."))
+            .SetIcon(icon)
+            .SetBuff(buff)
+            .SetActivationType(AbilityActivationType.Immediately)
+            .SetDeactivateImmediately(true)
+            .SetGroup(ActivatableAbilityGroup.None)
+            .Configure();
+
+        return toggleGuid;
+    }
+
     // ── Weapon entry ───────────────────────────────────────────────────────────
-    // One entry per weapon category. Grants the form toggle matching the weapon's handedness
-    // and applies the weapon's visual to that form's custom weapon type blueprint.
+    // One entry per weapon category. Grants the form toggle matching the weapon's handedness,
+    // proficiency for the chosen weapon, and records the dedicated per-category item to equip.
     private static Kingmaker.Blueprints.Classes.BlueprintFeature
-        MakeWeaponEntry(WeaponCategory cat, BlueprintItemWeaponReference weaponRef,
-                        string toggleGuid, string targetWeaponTypeGuid, string formLabel,
+        MakeWeaponEntry(WeaponCategory cat, string toggleGuid,
+                        BlueprintItemWeaponReference itemRef, string formLabel,
                         UnityEngine.Sprite icon)
     {
         var name   = FormatName(cat);
@@ -298,14 +431,9 @@ public static class MindBlade
             .SetIsClassFeature()
             .AddFacts([toggleGuid])
             // Grant proficiency for the exact weapon the player chose, so an exotic mind blade
-            // (two-bladed sword, elven curved blade, etc.) can be equipped. Granted at level 1
-            // with the selection, so it is present long before the blade is ever manifested.
+            // (two-bladed sword, elven curved blade, etc.) can be equipped.
             .AddComponent(new AddProficiencies { WeaponProficiencies = [cat] })
-            .AddComponent(new MindBladeVisualComponent
-            {
-                SourceWeaponRef      = weaponRef,
-                TargetWeaponTypeGuid = targetWeaponTypeGuid,
-            })
+            .AddComponent(new MindBladeFormComponent { ItemRef = itemRef })
             .Configure();
     }
 

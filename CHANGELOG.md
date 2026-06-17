@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.2.3] - Unreleased
+
+### Fixed
+- Fixed mind blades being shared between soulknives in the same party. Two soulknives with the same weapon form (e.g. both two-handed) would both display and use whichever weapon was summoned last, because every form shared a single weapon definition that was rewritten each time a blade was manifested. Each chosen weapon now has its own dedicated definition, so every soulknife's mind blade keeps its own appearance, reach, and behavior.
+- Fixed Mind Blade Finesse affecting other soulknives' mind blades. The Dexterity-to-hit bonus is now applied per character instead of to the shared weapon definition.
+
+### Changed
+- The Form Mind Blade toggle now shows the icon and name of the weapon you chose (on its action bar button and its tooltip), instead of a generic icon shared by every form
+
 ## [0.2.2] - 2026-06-14
 
 ### Fixed
